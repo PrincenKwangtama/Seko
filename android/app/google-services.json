@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "578929731859",
+    "project_id": "seko-94c21",
+    "storage_bucket": "seko-94c21.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:578929731859:android:d1ac5dc9e96765349692e6",
+        "android_client_info": {
+          "package_name": "com.sobgog.car_rental"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "578929731859-uip4ds74pdi8f30u80db1gptent0nd9r.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCmd7c7fRiOpaQg-l4E5-a4kVnFIk0F2UM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "578929731859-uip4ds74pdi8f30u80db1gptent0nd9r.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
