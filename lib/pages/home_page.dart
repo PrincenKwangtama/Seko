@@ -15,12 +15,13 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  static const Color warnaUtama = Color.fromARGB(255, 255, 203, 47);
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size; //check the size of device
     var brightness = MediaQuery.of(context).platformBrightness;
     bool isDarkMode = brightness ==
-        Brightness.dark; //check if device is in dark or light mode
+        Brightness.light; //check if device is in dark or light mode
 
     return Scaffold(
       appBar: PreferredSize(
@@ -52,9 +53,7 @@ class _HomePageState extends State<HomePage> {
                 ),
                 child: Icon(
                   UniconsLine.bars,
-                  color: isDarkMode
-                      ? Colors.white
-                      : const Color(0xff3b22a1), //icon bg color
+                  color: isDarkMode ? Colors.white : warnaUtama, //icon bg color
                   size: size.height * 0.025,
                 ),
               ),
@@ -90,7 +89,7 @@ class _HomePageState extends State<HomePage> {
                   ),
                   child: Icon(
                     UniconsLine.search,
-                    color: isDarkMode ? Colors.white : const Color(0xff3b22a1),
+                    color: isDarkMode ? Colors.white : warnaUtama,
                     size: size.height * 0.025,
                   ),
                 ),
@@ -140,9 +139,7 @@ class _HomePageState extends State<HomePage> {
                               'With Corporate Difference',
                               textAlign: TextAlign.center,
                               style: GoogleFonts.poppins(
-                                color: isDarkMode
-                                    ? Colors.white
-                                    : const Color(0xff3b22a1),
+                                color: isDarkMode ? Colors.white : warnaUtama,
                                 fontSize: size.width * 0.06,
                                 fontWeight: FontWeight.bold,
                               ),
@@ -158,9 +155,7 @@ class _HomePageState extends State<HomePage> {
                               'Enjoy the fun driving in Enterprise',
                               textAlign: TextAlign.center,
                               style: GoogleFonts.poppins(
-                                color: isDarkMode
-                                    ? Colors.white
-                                    : const Color(0xff3b22a1),
+                                color: isDarkMode ? Colors.white : warnaUtama,
                                 fontSize: size.width * 0.035,
                               ),
                             ),
@@ -216,7 +211,7 @@ class _HomePageState extends State<HomePage> {
                                         10,
                                       ),
                                     ),
-                                    color: Color(0xff3b22a1), //filters bg color
+                                    color: warnaUtama, //filters bg color
                                   ),
                                   child: Icon(
                                     UniconsLine.sliders_v,
