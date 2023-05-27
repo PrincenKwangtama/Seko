@@ -12,7 +12,7 @@ Column buildTopBrands(Size size, bool isDarkMode) {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             buildBrandLogo(
-              Image.asset(
+              Image.network(
                 'assets/icons/hyundai.png',
                 height: size.width * 0.1,
                 width: size.width * 0.15,
@@ -22,7 +22,7 @@ Column buildTopBrands(Size size, bool isDarkMode) {
               isDarkMode,
             ),
             buildBrandLogo(
-              Image.asset(
+              Image.network(
                 'assets/icons/volkswagen.png',
                 height: size.width * 0.12,
                 width: size.width * 0.12,
@@ -32,7 +32,7 @@ Column buildTopBrands(Size size, bool isDarkMode) {
               isDarkMode,
             ),
             buildBrandLogo(
-              Image.asset(
+              Image.network(
                 'assets/icons/toyota.png',
                 height: size.width * 0.08,
                 width: size.width * 0.12,
@@ -42,7 +42,7 @@ Column buildTopBrands(Size size, bool isDarkMode) {
               isDarkMode,
             ),
             buildBrandLogo(
-              Image.asset(
+              Image.network(
                 'assets/icons/bmw.png',
                 height: size.width * 0.12,
                 width: size.width * 0.12,

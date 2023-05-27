@@ -62,7 +62,7 @@ class _HomePageState extends State<HomePage> {
           automaticallyImplyLeading: false,
           titleSpacing: 0,
           leadingWidth: size.width * 0.15,
-          title: Image.asset(
+          title: Image.network(
             isDarkMode
                 ? 'assets/icons/SobGOGlight.png'
                 : 'assets/icons/SobGOGdark.png', //logo

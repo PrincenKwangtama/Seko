@@ -31,29 +31,37 @@ class AuthenticationService extends ChangeNotifier {
     return _userFromFirebase(credential.user);
   }
 
-  Future<User?> createUserWithEmailAndPassword(
-    String email,
-    String password,
-    String name,
-    BuildContext buildContext,
-  ) async {
-    final credential = await _firebaseAuth.createUserWithEmailAndPassword(
-      email: email,
-      password: password,
-    );
-    final auth.User user = _firebaseAuth.currentUser!;
-    users.doc(user.uid).set({
+Future<User?> createUserWithEmailAndPassword(
+  String email,
+  String password,
+  String name,
+  BuildContext buildContext,
+) async {
+  final credential = await _firebaseAuth.createUserWithEmailAndPassword(
+    email: email,
+    password: password,
+  );
+  final auth.User user = _firebaseAuth.currentUser!;
+
+  try {
+    await users.doc(user.uid).set({
       'email': email,
       'id': user.uid,
       'name': name,
     });
-    user.updateDisplayName(name);
 
-    user.reload();
-    user.sendEmailVerification();
+    await user.updateDisplayName(name);
+    await user.reload();
+    await user.sendEmailVerification();
 
     return _userFromFirebase(credential.user);
+  } catch (e) {
+    print('Firestore write error: $e');
+    // Handle the error accordingly, such as displaying an error message to the user
+    return null;
   }
+}
+
 
   Future<void> signOut() async {
     return await _firebaseAuth.signOut();
