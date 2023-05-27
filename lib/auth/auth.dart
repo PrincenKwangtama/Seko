@@ -32,10 +32,11 @@ class _AuthPageState extends State<AuthPage> {
 
   @override
   Widget build(BuildContext context) {
+    const Color warnaUtama = Color.fromARGB(255, 255, 203, 47);
     final authService = Provider.of<AuthenticationService>(context);
     Size size = MediaQuery.of(context).size;
     var brightness = MediaQuery.of(context).platformBrightness;
-    bool isDarkMode = brightness == Brightness.dark;
+    bool isDarkMode = brightness == Brightness.light;
     return Scaffold(
       body: Center(
         child: Container(
@@ -279,8 +280,8 @@ class _AuthPageState extends State<AuthPage> {
                                   Colors.black,
                                 ]
                               : const [
-                                  Color(0xff92A3FD),
-                                  Color(0xff9DCEFF),
+                                  warnaUtama,
+                                  warnaUtama,
                                 ],
                           textColors: const [
                             Colors.white,
