@@ -14,7 +14,7 @@ Row buildCategory(String text, size, isDarkMode) {
           text,
           textAlign: TextAlign.center,
           style: GoogleFonts.poppins(
-            color: isDarkMode ? Colors.white : const Color(0xff3b22a1),
+            color: isDarkMode ? Colors.white : const Color.fromARGB(255, 35, 34, 34),
             fontWeight: FontWeight.bold,
             fontSize: size.width * 0.055,
           ),

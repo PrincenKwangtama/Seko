@@ -1,4 +1,5 @@
 import 'package:car_rental/pages/home_page.dart';
+import 'package:car_rental/pages/chat.dart';
 import 'package:car_rental/widgets/bottom_nav_item.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -18,6 +19,9 @@ Widget buildBottomNavBar(int currIndex, Size size, bool isDarkMode) {
     unselectedItemColor: const Color(0xff3b22a1),
     onTap: (value) {
       if (value != currIndex) {
+        if (value == 0) {
+          Get.off(const ChatPage());
+        }
         if (value == 1) {
           Get.off(const HomePage());
         }
@@ -33,7 +37,7 @@ Widget buildBottomNavBar(int currIndex, Size size, bool isDarkMode) {
         size,
       ),
       buildBottomNavItem(
-        UniconsLine.map_marker,
+        UniconsLine.chat,
         isDarkMode,
         size,
       ),

@@ -15,7 +15,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  static const Color warnaUtama = Color.fromARGB(255, 255, 203, 47);
+  static const Color warnaUtama = Color.fromARGB(255, 35, 34, 34);
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size; //check the size of device

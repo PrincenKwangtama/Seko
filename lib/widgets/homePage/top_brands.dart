@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 Column buildTopBrands(Size size, bool isDarkMode) {
   return Column(
     children: [
-      buildCategory('Top Brands', size, isDarkMode),
+      buildCategory('Top Brands', size, isDarkMode, ),
       Padding(
         padding: EdgeInsets.only(top: size.height * 0.015),
         child: Row(
