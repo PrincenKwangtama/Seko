@@ -3,7 +3,6 @@ import 'package:car_rental/widgets/bottom_nav_bar.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
-
 class ChatPage extends StatefulWidget {
   const ChatPage({Key? key}) : super(key: key);
 
@@ -50,9 +49,38 @@ class _ChatPageState extends State<ChatPage> {
                     itemBuilder: (context, index) {
                       final message = messages[index].get('text');
                       final sender = messages[index].get('sender');
-                      return ListTile(
-                        title: Text(message),
-                        subtitle: Text('Sent by: $sender'),
+                      final currentUser = _auth.currentUser;
+                      final isCurrentUserMessage = sender == currentUser?.displayName;
+
+                      return Align(
+                        alignment: isCurrentUserMessage ? Alignment.centerRight : Alignment.centerLeft,
+                        child: Container(
+                          padding: EdgeInsets.symmetric(vertical: 4.0, horizontal: 8.0),
+                          margin: EdgeInsets.symmetric(vertical: 4.0, horizontal: 8.0),
+                          decoration: BoxDecoration(
+                            color: isCurrentUserMessage ? Colors.blue : Colors.grey,
+                            borderRadius: BorderRadius.circular(8.0),
+                          ),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                message,
+                                style: TextStyle(
+                                  color: isCurrentUserMessage ? Colors.white : Colors.black,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              SizedBox(height: 4.0),
+                              Text(
+                                'Sent by: $sender',
+                                style: TextStyle(
+                                  color: isCurrentUserMessage ? Colors.white : Colors.black,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
                       );
                     },
                   );
