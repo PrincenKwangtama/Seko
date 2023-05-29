@@ -20,13 +20,13 @@ Widget buildBottomNavBar(int currIndex, Size size, bool isDarkMode) {
     onTap: (value) {
       if (value != currIndex) {
         if (value == 0) {
-          Get.offAll(const ChatPage());
+          Get.off(const ChatPage());
         }
         if (value == 1) {
-          Get.offAll(const HomePage());
+          Get.off(const HomePage());
         }
         if (value == 2) {
-          Get.offAll(const HomePage());
+          Get.off(const HomePage());
         }
         if (value == 3) {
           FirebaseAuth.instance.signOut();

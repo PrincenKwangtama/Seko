@@ -3,6 +3,7 @@ import 'package:car_rental/widgets/bottom_nav_bar.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
+
 class ChatPage extends StatefulWidget {
   const ChatPage({Key? key}) : super(key: key);
 
@@ -76,7 +77,7 @@ class _ChatPageState extends State<ChatPage> {
                       if (user != null) {
                         messagesCollection.add({
                           'text': _messageController.text,
-                          'sender': user.email,
+                          'sender': user.displayName,
                           'timestamp': FieldValue.serverTimestamp(),
                         });
                         _messageController.clear();
