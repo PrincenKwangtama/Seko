@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 BottomNavigationBarItem buildBottomNavItem(
-    IconData icon, bool isDarkMode, Size size) {
+    IconData icon, String label, bool isDarkMode, Size size) {
   return BottomNavigationBarItem(
     icon: SizedBox(
       height: size.width * 0.12,
@@ -22,6 +22,7 @@ BottomNavigationBarItem buildBottomNavItem(
         ),
       ),
     ),
-    label: '',
+    label: label, // Set the label text for the navigation item
   );
 }
+

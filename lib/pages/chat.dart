@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:car_rental/widgets/bottom_nav_bar.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
@@ -14,17 +15,26 @@ class _ChatPageState extends State<ChatPage> {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
   final TextEditingController _messageController = TextEditingController();
 
+  final int _currentIndex = 0; // Track the current navigation index
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Chat'),
+        title: const Text(
+          'Chat',
+          style: TextStyle(color: Color.fromARGB(255, 47, 42, 42)),
+          ),
+        backgroundColor:  const Color.fromARGB(255, 192, 192, 12),
       ),
       body: Column(
         children: [
           Expanded(
             child: StreamBuilder<QuerySnapshot>(
-              stream: _firestore.collection('messages').orderBy('timestamp').snapshots(),
+              stream: _firestore
+                  .collection('messages')
+                  .orderBy('timestamp')
+                  .snapshots(),
               builder: (context, snapshot) {
                 if (!snapshot.hasData) {
                   return const CircularProgressIndicator();
@@ -75,6 +85,11 @@ class _ChatPageState extends State<ChatPage> {
             ),
           ),
         ],
+      ),
+      bottomNavigationBar: buildBottomNavBar(
+        _currentIndex,
+        MediaQuery.of(context).size,
+        false,
       ),
     );
   }

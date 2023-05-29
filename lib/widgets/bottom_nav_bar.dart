@@ -20,10 +20,13 @@ Widget buildBottomNavBar(int currIndex, Size size, bool isDarkMode) {
     onTap: (value) {
       if (value != currIndex) {
         if (value == 0) {
-          Get.off(const ChatPage());
+          Get.offAll(const ChatPage());
         }
         if (value == 1) {
-          Get.off(const HomePage());
+          Get.offAll(const HomePage());
+        }
+        if (value == 2) {
+          Get.offAll(const HomePage());
         }
         if (value == 3) {
           FirebaseAuth.instance.signOut();
@@ -32,25 +35,30 @@ Widget buildBottomNavBar(int currIndex, Size size, bool isDarkMode) {
     },
     items: [
       buildBottomNavItem(
-        UniconsLine.bell,
+        UniconsLine.chat,
+        '', // Set the label text for the first navigation item (empty string for no label)
         isDarkMode,
         size,
       ),
       buildBottomNavItem(
-        UniconsLine.chat,
+        UniconsLine.home,
+        'Chat', // Set the label text for the second navigation item
         isDarkMode,
         size,
       ),
       buildBottomNavItem(
         UniconsLine.user,
+        '', // Set the label text for the third navigation item (empty string for no label)
         isDarkMode,
         size,
       ),
       buildBottomNavItem(
         UniconsLine.arrow_left,
+        '', // Set the label text for the fourth navigation item (empty string for no label)
         isDarkMode,
         size,
       ),
     ],
   );
 }
+
