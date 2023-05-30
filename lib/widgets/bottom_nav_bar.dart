@@ -1,4 +1,5 @@
 import 'package:car_rental/pages/home_page.dart';
+import 'package:car_rental/pages/profile.dart';
 import 'package:car_rental/pages/chat.dart';
 import 'package:car_rental/widgets/bottom_nav_item.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -26,7 +27,7 @@ Widget buildBottomNavBar(int currIndex, Size size, bool isDarkMode) {
           Get.off(const HomePage());
         }
         if (value == 2) {
-          Get.off(const HomePage());
+          Get.off(ProfilePage());
         }
         if (value == 3) {
           FirebaseAuth.instance.signOut();
@@ -53,7 +54,7 @@ Widget buildBottomNavBar(int currIndex, Size size, bool isDarkMode) {
         size,
       ),
       buildBottomNavItem(
-        UniconsLine.arrow_left,
+        UniconsLine.signout,
         '', // Set the label text for the fourth navigation item (empty string for no label)
         isDarkMode,
         size,
@@ -61,4 +62,3 @@ Widget buildBottomNavBar(int currIndex, Size size, bool isDarkMode) {
     ],
   );
 }
-

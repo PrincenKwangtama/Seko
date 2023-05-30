@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:car_rental/widgets/bottom_nav_bar.dart';
+import 'package:car_rental/pages/home_page.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:get/get.dart';
 
 class ChatPage extends StatefulWidget {
   const ChatPage({Key? key}) : super(key: key);
@@ -25,11 +27,18 @@ class _ChatPageState extends State<ChatPage> {
     if (user != null) {
       return Scaffold(
         appBar: AppBar(
+          leading: IconButton(
+            icon: const Icon(Icons.arrow_back),
+            onPressed: () {
+              Get.off(const HomePage());
+            },
+          ),
           title: const Text(
             'Chat',
             style: TextStyle(color: Color.fromARGB(255, 47, 42, 42)),
           ),
           backgroundColor: const Color.fromARGB(255, 192, 192, 12),
+          centerTitle: true,
         ),
         body: Column(
           children: [
@@ -55,8 +64,8 @@ class _ChatPageState extends State<ChatPage> {
                       return Align(
                         alignment: isCurrentUserMessage ? Alignment.centerRight : Alignment.centerLeft,
                         child: Container(
-                          padding: EdgeInsets.symmetric(vertical: 4.0, horizontal: 8.0),
-                          margin: EdgeInsets.symmetric(vertical: 4.0, horizontal: 8.0),
+                          padding: const EdgeInsets.symmetric(vertical: 4.0, horizontal: 8.0),
+                          margin: const EdgeInsets.symmetric(vertical: 4.0, horizontal: 8.0),
                           decoration: BoxDecoration(
                             color: isCurrentUserMessage ? Colors.blue : Colors.grey,
                             borderRadius: BorderRadius.circular(8.0),
@@ -71,7 +80,7 @@ class _ChatPageState extends State<ChatPage> {
                                   fontWeight: FontWeight.bold,
                                 ),
                               ),
-                              SizedBox(height: 4.0),
+                              const SizedBox(height: 4.0),
                               Text(
                                 'Sent by: $sender',
                                 style: TextStyle(
