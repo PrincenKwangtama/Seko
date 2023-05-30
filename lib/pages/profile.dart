@@ -1,5 +1,6 @@
 import 'package:car_rental/auth/wrapper.dart';
 import 'package:car_rental/pages/edit_profile.dart';
+import 'package:car_rental/pages/notif.dart';
 import 'package:flutter/material.dart';
 import 'package:car_rental/widgets/bottom_nav_bar.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -31,14 +32,13 @@ class _ProfilePageState extends State<ProfilePage> {
 
   void _goToNotifications() {
     // Add your logic to navigate to the notification page
+    Get.offAll(const NotifPage());
   }
 
 void _logout() async {
   FirebaseAuth.instance.signOut();
   Get.offAll(const Wrapper());
 }
-
-
 
   @override
   Widget build(BuildContext context) {
