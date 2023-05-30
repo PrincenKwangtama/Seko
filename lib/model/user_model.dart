@@ -1,6 +1,15 @@
 class User {
   final String uid;
   final String? email;
-  final bool? emailVerifed;
-  User(this.uid, this.email, this.emailVerifed);
+  final bool? emailVerified;
+  final String phoneNumber;
+  final String profilePicture;
+
+  User({
+    required this.uid,
+    this.email,
+    this.emailVerified,
+    this.phoneNumber = '+621122223333',
+    this.profilePicture = 'assets/images/profile.jpg',
+  });
 }

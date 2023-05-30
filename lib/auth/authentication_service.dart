@@ -12,7 +12,11 @@ class AuthenticationService extends ChangeNotifier {
       return null;
     }
 
-    return User(user.uid, user.email, user.emailVerified);
+    return User(
+      uid: user.uid,
+      email: user.email,
+      emailVerified: user.emailVerified,
+    );
   }
 
   Stream<User?>? get user {
@@ -31,37 +35,38 @@ class AuthenticationService extends ChangeNotifier {
     return _userFromFirebase(credential.user);
   }
 
-Future<User?> createUserWithEmailAndPassword(
-  String email,
-  String password,
-  String name,
-  BuildContext buildContext,
-) async {
-  final credential = await _firebaseAuth.createUserWithEmailAndPassword(
-    email: email,
-    password: password,
-  );
-  final auth.User user = _firebaseAuth.currentUser!;
+  Future<User?> createUserWithEmailAndPassword(
+    String email,
+    String password,
+    String name,
+    BuildContext buildContext,
+  ) async {
+    final credential = await _firebaseAuth.createUserWithEmailAndPassword(
+      email: email,
+      password: password,
+    );
+    final auth.User user = _firebaseAuth.currentUser!;
 
-  try {
-    await users.doc(user.uid).set({
-      'email': email,
-      'id': user.uid,
-      'name': name,
-    });
+    try {
+      await users.doc(user.uid).set({
+        'email': email,
+        'id': user.uid,
+        'name': name,
+        'phoneNumber': '+621122223333',
+        'profilePicture': 'assets/images/profile.jpg',
+      });
 
-    await user.updateDisplayName(name);
-    await user.reload();
-    await user.sendEmailVerification();
+      await user.updateDisplayName(name);
+      await user.reload();
+      await user.sendEmailVerification();
 
-    return _userFromFirebase(credential.user);
-  } catch (e) {
-    print('Firestore write error: $e');
-    // Handle the error accordingly, such as displaying an error message to the user
-    return null;
+      return _userFromFirebase(credential.user);
+    } catch (e) {
+      print('Firestore write error: $e');
+      // Handle the error accordingly, such as displaying an error message to the user
+      return null;
+    }
   }
-}
-
 
   Future<void> signOut() async {
     return await _firebaseAuth.signOut();
