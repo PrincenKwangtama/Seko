@@ -1,9 +1,10 @@
+import 'package:car_rental/auth/wrapper.dart';
+import 'package:car_rental/pages/edit_profile.dart';
 import 'package:flutter/material.dart';
 import 'package:car_rental/widgets/bottom_nav_bar.dart';
-import 'package:car_rental/pages/home_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:get/get.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:get/get.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({Key? key}) : super(key: key);
@@ -23,14 +24,32 @@ class _ProfilePageState extends State<ProfilePage> {
     _user = _auth.currentUser;
   }
 
+  void _editProfile() {
+    // Add your logic to handle editing the user profile
+    Get.offAll(const EditProfilePage());
+  }
+
+  void _goToNotifications() {
+    // Add your logic to navigate to the notification page
+  }
+
+void _logout() async {
+  FirebaseAuth.instance.signOut();
+  Get.offAll(const Wrapper());
+}
+
+
+
   @override
   Widget build(BuildContext context) {
+    double screenWidth = MediaQuery.of(context).size.width;
+
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
           onPressed: () {
-            Get.off(const HomePage());
+            Navigator.pop(context);
           },
         ),
         title: const Text(
@@ -80,12 +99,39 @@ class _ProfilePageState extends State<ProfilePage> {
                   'Phone Number: ${phoneNumber ?? 'N/A'}',
                   style: const TextStyle(fontSize: 18),
                 ),
+                const SizedBox(height: 16),
+                SizedBox(
+                  width: screenWidth * 0.5, // Cover half of the screen width
+                  height: 60,
+                  child: ElevatedButton(
+                    onPressed: _editProfile,
+                    child: const Text('Edit Profile'),
+                  ),
+                ),
+                const SizedBox(height: 8),
+                SizedBox(
+                  width: screenWidth * 0.5, // Cover half of the screen width
+                  height: 60,
+                  child: ElevatedButton(
+                    onPressed: _goToNotifications,
+                    child: const Text('Notifications'),
+                  ),
+                ),
+                const SizedBox(height: 8),
+                SizedBox(
+                  width: screenWidth * 0.5, // Cover half of the screen width
+                  height: 60,
+                  child: ElevatedButton(
+                    onPressed: _logout,
+                    child: const Text('Logout'),
+                  ),
+                ),
               ],
             ),
           );
         },
       ),
-      bottomNavigationBar: buildBottomNavBar(2, MediaQuery.of(context).size, false),
+      bottomNavigationBar: buildBottomNavBar(3, MediaQuery.of(context).size, false),
     );
   }
 }

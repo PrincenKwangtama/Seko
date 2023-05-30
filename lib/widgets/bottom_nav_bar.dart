@@ -27,10 +27,10 @@ Widget buildBottomNavBar(int currIndex, Size size, bool isDarkMode) {
           Get.off(const HomePage());
         }
         if (value == 2) {
-          Get.off(ProfilePage());
+          Get.off(const ProfilePage());
         }
         if (value == 3) {
-          FirebaseAuth.instance.signOut();
+          Get.off(const ProfilePage());
         }
       }
     },
@@ -48,13 +48,13 @@ Widget buildBottomNavBar(int currIndex, Size size, bool isDarkMode) {
         size,
       ),
       buildBottomNavItem(
-        UniconsLine.user,
+        UniconsLine.history,
         '', // Set the label text for the third navigation item (empty string for no label)
         isDarkMode,
         size,
       ),
       buildBottomNavItem(
-        UniconsLine.signout,
+        UniconsLine.user,
         '', // Set the label text for the fourth navigation item (empty string for no label)
         isDarkMode,
         size,

@@ -322,7 +322,7 @@ class _DetailsPageState extends State<DetailsPage> {
                                       target: _center,
                                       zoom: 13.0,
                                     ),
-                                    onTap: (latLng) => Get.to(Maps()),
+                                    onTap: (latLng) => Get.to(const Maps()),
                                     zoomControlsEnabled: false,
                                     scrollGesturesEnabled: true,
                                     zoomGesturesEnabled: true,
