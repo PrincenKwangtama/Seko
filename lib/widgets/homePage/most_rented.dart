@@ -15,7 +15,7 @@ Widget buildMostRented(Size size, bool isDarkMode) {
           right: size.width * 0.03,
         ),
         child: FutureBuilder<QuerySnapshot>(
-          future: cars.get(),
+          future: cars.where('carName', isEqualTo: 'Volkswagen Golf EVO 2020').get(),
           builder: (
             BuildContext context,
             AsyncSnapshot<QuerySnapshot> snapshot,
