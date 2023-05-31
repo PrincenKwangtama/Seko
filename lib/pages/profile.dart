@@ -72,6 +72,7 @@ void _logout() async {
           final userDocument = snapshot.data!;
           final name = userDocument['name'];
           final email = userDocument['email'];
+          final status = userDocument['status'];
           final phoneNumber = userDocument['phoneNumber'];
           final profilePicture = userDocument['profilePicture'];
 
@@ -93,6 +94,11 @@ void _logout() async {
                 const SizedBox(height: 8),
                 Text(
                   'Email: ${email ?? 'N/A'}',
+                  style: const TextStyle(fontSize: 18),
+                ),
+                const SizedBox(height: 8),
+                Text(
+                  'Status: ${status ?? 'N/A'}',
                   style: const TextStyle(fontSize: 18),
                 ),
                 const SizedBox(height: 8),

@@ -17,7 +17,8 @@ class _EditProfilePageState extends State<EditProfilePage> {
   late User? _user;
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
-  final TextEditingController _phoneNumberController = TextEditingController();
+  final TextEditingController _statusController = TextEditingController();
+  final TextEditingController _phoneNumberController = TextEditingController(); 
 
   @override
   void initState() {
@@ -37,6 +38,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
       final data = snapshot.data() as Map<String, dynamic>;
       _nameController.text = data['name'] ?? '';
       _emailController.text = data['email'] ?? '';
+      _statusController.text = data['status'] ?? '';
       _phoneNumberController.text = data['phoneNumber'] ?? '';
     }
   }
@@ -45,6 +47,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
     final profileData = {
       'name': _nameController.text,
       'email': _emailController.text,
+      'status': _statusController.text,
       'phoneNumber': _phoneNumberController.text,
     };
 
@@ -64,6 +67,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
   void dispose() {
     _nameController.dispose();
     _emailController.dispose();
+    _statusController.dispose();
     _phoneNumberController.dispose();
     super.dispose();
   }
@@ -126,6 +130,15 @@ class _EditProfilePageState extends State<EditProfilePage> {
                   decoration: const InputDecoration(
                     labelText: 'Email',
                     hintText: 'Enter your email',
+                    filled: true,
+                  ),
+                ),
+                const SizedBox(height: 8),
+                TextField(
+                  controller: _statusController,
+                  decoration: const InputDecoration(
+                    labelText: 'Status',
+                    hintText: 'Enter your status',
                     filled: true,
                   ),
                 ),
