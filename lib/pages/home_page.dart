@@ -98,7 +98,7 @@ class _HomePageState extends State<HomePage> {
       ),
       extendBody: true,
       extendBodyBehindAppBar: true,
-      bottomNavigationBar: buildBottomNavBar(1, size, isDarkMode),
+      bottomNavigationBar: buildBottomNavBar(0, size, isDarkMode),
       body: Center(
         child: Container(
           height: size.height,

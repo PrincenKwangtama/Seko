@@ -17,7 +17,7 @@ class _ChatPageState extends State<ChatPage> {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
   final TextEditingController _messageController = TextEditingController();
 
-  final int _currentIndex = 0; // Track the current navigation index
+  final int _currentIndex = 1; // Track the current navigation index
 
   @override
   Widget build(BuildContext context) {

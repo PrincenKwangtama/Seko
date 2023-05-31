@@ -1,5 +1,6 @@
 import 'package:car_rental/auth/wrapper.dart';
 import 'package:car_rental/pages/edit_profile.dart';
+import 'package:car_rental/pages/home_page.dart';
 import 'package:car_rental/pages/notif.dart';
 import 'package:flutter/material.dart';
 import 'package:car_rental/widgets/bottom_nav_bar.dart';
@@ -49,7 +50,7 @@ void _logout() async {
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
           onPressed: () {
-            Navigator.pop(context);
+            Get.offAll(const HomePage ());
           },
         ),
         title: const Text(

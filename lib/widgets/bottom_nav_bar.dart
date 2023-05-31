@@ -20,10 +20,10 @@ Widget buildBottomNavBar(int currIndex, Size size, bool isDarkMode) {
     onTap: (value) {
       if (value != currIndex) {
         if (value == 0) {
-          Get.off(const ChatPage());
+          Get.off(const HomePage());
         }
         if (value == 1) {
-          Get.off(const HomePage());
+          Get.off(const ChatPage());
         }
         if (value == 2) {
           Get.off(const ProfilePage());
@@ -35,13 +35,13 @@ Widget buildBottomNavBar(int currIndex, Size size, bool isDarkMode) {
     },
     items: [
       buildBottomNavItem(
-        UniconsLine.chat,
+        UniconsLine.home,
         '', // Set the label text for the first navigation item (empty string for no label)
         isDarkMode,
         size,
       ),
       buildBottomNavItem(
-        UniconsLine.home,
+        UniconsLine.chat,
         'Chat', // Set the label text for the second navigation item
         isDarkMode,
         size,
