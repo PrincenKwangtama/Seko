@@ -82,7 +82,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
           'Edit Profile',
           style: TextStyle(color: Color.fromARGB(255, 47, 42, 42)),
         ),
-        backgroundColor: const Color.fromARGB(255, 192, 192, 12),
+        backgroundColor: const Color.fromARGB(255, 255, 203, 47),
         centerTitle: true,
       ),
       body: StreamBuilder<DocumentSnapshot>(

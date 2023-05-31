@@ -111,14 +111,12 @@ class _ChatPageState extends State<ChatPage> {
                   IconButton(
                     icon: const Icon(Icons.send),
                     onPressed: () {
-                      if (user != null) {
-                        messagesCollection.add({
-                          'text': _messageController.text,
-                          'sender': user.displayName,
-                          'timestamp': FieldValue.serverTimestamp(),
-                        });
-                        _messageController.clear();
-                      }
+                      messagesCollection.add({
+                        'text': _messageController.text,
+                        'sender': user.displayName,
+                        'timestamp': FieldValue.serverTimestamp(),
+                      });
+                      _messageController.clear();
                     },
                   ),
                 ],

@@ -15,7 +15,7 @@ Column buildTopBrands(Size size, bool isDarkMode) {
           children: [
             GestureDetector(
               onTap: () {
-                Get.off(() => CarPage(carBrand: 'Wuling'));
+                Get.off(() => const CarPage(carBrand: 'Wuling'));
               },
               child: MouseRegion(
                 cursor: SystemMouseCursors.click,
@@ -33,7 +33,7 @@ Column buildTopBrands(Size size, bool isDarkMode) {
             ),
             GestureDetector(
               onTap: () {
-                Get.off(() => CarPage(carBrand: 'Honda'));
+                Get.off(() => const CarPage(carBrand: 'Honda'));
               },
               child: MouseRegion(
                 cursor: SystemMouseCursors.click,
@@ -51,7 +51,7 @@ Column buildTopBrands(Size size, bool isDarkMode) {
             ),
             GestureDetector(
               onTap: () {
-                Get.off(() => CarPage(carBrand: 'Toyota'));
+                Get.off(() => const CarPage(carBrand: 'Toyota'));
               },
               child: MouseRegion(
                 cursor: SystemMouseCursors.click,
@@ -69,7 +69,7 @@ Column buildTopBrands(Size size, bool isDarkMode) {
             ),
             GestureDetector(
               onTap: () {
-                Get.off(() => CarPage(carBrand: 'Suzuki'));
+                Get.off(() => const CarPage(carBrand: 'Suzuki'));
               },
               child: MouseRegion(
                 cursor: SystemMouseCursors.click,

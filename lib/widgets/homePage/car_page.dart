@@ -2,21 +2,34 @@ import 'dart:math';
 
 import 'package:car_rental/pages/details_page.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:car_rental/pages/home_page.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:unicons/unicons.dart';
 
+import 'package:car_rental/widgets/bottom_nav_bar.dart';
+
 class CarPage extends StatelessWidget {
   final String carBrand;
 
-  CarPage({required this.carBrand});
+  const CarPage({Key? key, required this.carBrand}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(carBrand),
+        title:  Text(
+          carBrand,
+          style: const TextStyle(color: Color.fromARGB(255, 47, 42, 42)),
+        ),
+        backgroundColor: const Color.fromARGB(255, 255, 203, 47),
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back),
+          onPressed: () {
+            Get.off(const HomePage());;
+          },
+        ),
       ),
       body: StreamBuilder<QuerySnapshot>(
         stream: FirebaseFirestore.instance
@@ -25,10 +38,10 @@ class CarPage extends StatelessWidget {
             .snapshots(),
         builder: (context, snapshot) {
           if (snapshot.hasError) {
-            return Center(child: Text('Error fetching car data'));
+            return const Center(child: Text('Error fetching car data'));
           }
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return Center(child: CircularProgressIndicator());
+            return const Center(child: CircularProgressIndicator());
           }
           final data = snapshot.data!.docs;
           return ListView.builder(
@@ -40,6 +53,7 @@ class CarPage extends StatelessWidget {
           );
         },
       ),
+      bottomNavigationBar: buildBottomNavBar(0, MediaQuery.of(context).size, false),
     );
   }
 
@@ -51,9 +65,9 @@ class CarPage extends StatelessWidget {
           height: 200,
           width: 150,
           child: Container(
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
               color: Colors.white,
-              borderRadius: const BorderRadius.all(
+              borderRadius: BorderRadius.all(
                 Radius.circular(20),
               ),
             ),
@@ -148,7 +162,7 @@ class CarPage extends StatelessWidget {
                             height: 20,
                             width: 20,
                             child: Container(
-                              decoration: BoxDecoration(
+                              decoration: const BoxDecoration(
                                 color: Colors.blue,
                                 borderRadius: BorderRadius.all(
                                   Radius.circular(10),
