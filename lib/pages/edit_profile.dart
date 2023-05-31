@@ -5,6 +5,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:get/get.dart';
 
+enum UserStatus { user, driver }
+
 class EditProfilePage extends StatefulWidget {
   const EditProfilePage({Key? key}) : super(key: key);
 
@@ -17,8 +19,8 @@ class _EditProfilePageState extends State<EditProfilePage> {
   late User? _user;
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
-  final TextEditingController _statusController = TextEditingController();
-  final TextEditingController _phoneNumberController = TextEditingController(); 
+  UserStatus _selectedStatus = UserStatus.user;
+  final TextEditingController _phoneNumberController = TextEditingController();
 
   @override
   void initState() {
@@ -38,7 +40,8 @@ class _EditProfilePageState extends State<EditProfilePage> {
       final data = snapshot.data() as Map<String, dynamic>;
       _nameController.text = data['name'] ?? '';
       _emailController.text = data['email'] ?? '';
-      _statusController.text = data['status'] ?? '';
+      _selectedStatus =
+          data['status'] == 'driver' ? UserStatus.driver : UserStatus.user;
       _phoneNumberController.text = data['phoneNumber'] ?? '';
     }
   }
@@ -47,7 +50,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
     final profileData = {
       'name': _nameController.text,
       'email': _emailController.text,
-      'status': _statusController.text,
+      'status': _selectedStatus == UserStatus.driver ? 'driver' : 'user',
       'phoneNumber': _phoneNumberController.text,
     };
 
@@ -67,7 +70,6 @@ class _EditProfilePageState extends State<EditProfilePage> {
   void dispose() {
     _nameController.dispose();
     _emailController.dispose();
-    _statusController.dispose();
     _phoneNumberController.dispose();
     super.dispose();
   }
@@ -105,10 +107,10 @@ class _EditProfilePageState extends State<EditProfilePage> {
           final profilePicture = userDocument['profilePicture'];
 
           return Container(
-            alignment: Alignment.topCenter, // Align the content to the top center
-            padding: const EdgeInsets.only(top: 20), // Add top padding for spacing
+            alignment: Alignment.topCenter,
+            padding: const EdgeInsets.only(top: 20),
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.start, // Align the content from top to bottom
+              mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 CircleAvatar(
                   radius: 50,
@@ -135,15 +137,6 @@ class _EditProfilePageState extends State<EditProfilePage> {
                 ),
                 const SizedBox(height: 8),
                 TextField(
-                  controller: _statusController,
-                  decoration: const InputDecoration(
-                    labelText: 'Status',
-                    hintText: 'Enter your status',
-                    filled: true,
-                  ),
-                ),
-                const SizedBox(height: 8),
-                TextField(
                   controller: _phoneNumberController,
                   decoration: const InputDecoration(
                     labelText: 'Phone Number',
@@ -151,9 +144,42 @@ class _EditProfilePageState extends State<EditProfilePage> {
                     filled: true,
                   ),
                 ),
+                const SizedBox(height: 8),
+                Row(
+                  children: [
+                    Expanded(
+                      child: ListTile(
+                        title: const Text('User'),
+                        leading: Radio<UserStatus>(
+                          value: UserStatus.user,
+                          groupValue: _selectedStatus,
+                          onChanged: (UserStatus? value) {
+                            setState(() {
+                              _selectedStatus = value!;
+                            });
+                          },
+                        ),
+                      ),
+                    ),
+                    Expanded(
+                      child: ListTile(
+                        title: const Text('Driver'),
+                        leading: Radio<UserStatus>(
+                          value: UserStatus.driver,
+                          groupValue: _selectedStatus,
+                          onChanged: (UserStatus? value) {
+                            setState(() {
+                              _selectedStatus = value!;
+                            });
+                          },
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
                 const SizedBox(height: 16),
                 SizedBox(
-                  width: screenWidth * 0.5, // Cover half of the screen width
+                  width: screenWidth * 0.5,
                   height: 60,
                   child: ElevatedButton(
                     onPressed: _saveProfileChanges,
