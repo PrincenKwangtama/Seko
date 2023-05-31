@@ -73,6 +73,7 @@ void _logout() async {
           final name = userDocument['name'];
           final email = userDocument['email'];
           final phoneNumber = userDocument['phoneNumber'];
+          final status = userDocument['status'];
           final profilePicture = userDocument['profilePicture'];
 
           return Container(
@@ -98,6 +99,10 @@ void _logout() async {
                 const SizedBox(height: 8),
                 Text(
                   'Phone Number: ${phoneNumber ?? 'N/A'}',
+                  style: const TextStyle(fontSize: 18),
+                ),
+                Text(
+                  'User Status: ${status ?? 'N/A'}',
                   style: const TextStyle(fontSize: 18),
                 ),
                 const SizedBox(height: 16),
