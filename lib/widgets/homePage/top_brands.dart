@@ -13,7 +13,7 @@ Column buildTopBrands(Size size, bool isDarkMode) {
           children: [
             buildBrandLogo(
               Image.network(
-                'assets/icons/hyundai.png',
+                'assets/icons/wuling.png',
                 height: size.width * 0.1,
                 width: size.width * 0.15,
                 fit: BoxFit.fill,
@@ -23,7 +23,7 @@ Column buildTopBrands(Size size, bool isDarkMode) {
             ),
             buildBrandLogo(
               Image.network(
-                'assets/icons/volkswagen.png',
+                'assets/icons/honda.png',
                 height: size.width * 0.12,
                 width: size.width * 0.12,
                 fit: BoxFit.fill,
@@ -43,7 +43,7 @@ Column buildTopBrands(Size size, bool isDarkMode) {
             ),
             buildBrandLogo(
               Image.network(
-                'assets/icons/bmw.png',
+                'assets/icons/susuzki.png',
                 height: size.width * 0.12,
                 width: size.width * 0.12,
                 fit: BoxFit.fill,
