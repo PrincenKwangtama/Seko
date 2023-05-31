@@ -19,8 +19,8 @@ class _EditProfilePageState extends State<EditProfilePage> {
   late User? _user;
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
-  UserStatus _selectedStatus = UserStatus.user;
-  final TextEditingController _phoneNumberController = TextEditingController();
+  final TextEditingController _statusController = TextEditingController();
+  final TextEditingController _phoneNumberController = TextEditingController(); 
 
   @override
   void initState() {
@@ -40,8 +40,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
       final data = snapshot.data() as Map<String, dynamic>;
       _nameController.text = data['name'] ?? '';
       _emailController.text = data['email'] ?? '';
-      _selectedStatus =
-          data['status'] == 'driver' ? UserStatus.driver : UserStatus.user;
+      _statusController.text = data['status'] ?? '';
       _phoneNumberController.text = data['phoneNumber'] ?? '';
     }
   }
@@ -50,7 +49,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
     final profileData = {
       'name': _nameController.text,
       'email': _emailController.text,
-      'status': _selectedStatus == UserStatus.driver ? 'driver' : 'user',
+      'status': _statusController.text,
       'phoneNumber': _phoneNumberController.text,
     };
 
