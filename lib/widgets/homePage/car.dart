@@ -31,6 +31,7 @@ Padding buildCar(int i, Size size, bool isDarkMode, data) {
             child: InkWell(
               onTap: () {
                 Get.to(DetailsPage(
+                  carBrand: data.docs[i]['carBrand'],
                   carImage: data.docs[i]['carImage'],
                   carClass: data.docs[i]['carClass'],
                   carName: data.docs[i]['carName'],

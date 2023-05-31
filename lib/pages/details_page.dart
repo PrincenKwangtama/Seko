@@ -8,6 +8,7 @@ import 'package:unicons/unicons.dart';
 import 'package:car_rental/pages/maps.dart';
 
 class DetailsPage extends StatefulWidget {
+  final String carBrand;
   final String carImage;
   final String carClass;
   final String carName;
@@ -20,6 +21,7 @@ class DetailsPage extends StatefulWidget {
 
   const DetailsPage({
     Key? key,
+    required this.carBrand,
     required this.carImage,
     required this.carClass,
     required this.carName,
@@ -94,9 +96,9 @@ class _DetailsPageState extends State<DetailsPage> {
           leadingWidth: size.width * 0.15,
           title: Image.network(
             isDarkMode
-                ? 'assets/icons/SobGOGlight.png'
-                : 'assets/icons/SobGOGdark.png',
-            height: size.height * 0.06,
+                ? 'assets/images/seko.png'
+                : 'assets/images/seko.png',
+            height: size.height * 0.10,
             width: size.width * 0.35,
           ),
           centerTitle: true,

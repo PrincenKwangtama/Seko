@@ -62,10 +62,10 @@ class _HomePageState extends State<HomePage> {
           leadingWidth: size.width * 0.15,
           title: Image.network(
             isDarkMode
-                ? 'assets/icons/SobGOGlight.png'
-                : 'assets/icons/SobGOGdark.png', //logo
-            height: size.height * 0.06,
-            width: size.width * 0.35,
+                ? 'assets/images/seko.png'
+                : 'assets/images/seko.png', //logo
+            height: size.height * 0.10,
+            width: size.width * 0.45,
           ),
           centerTitle: true,
           actions: <Widget>[
