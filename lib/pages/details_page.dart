@@ -6,6 +6,7 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:unicons/unicons.dart';
 import 'package:car_rental/pages/maps.dart';
+import 'package:car_rental/pages/payment.dart';
 
 class DetailsPage extends StatefulWidget {
   final String carBrand;
@@ -337,7 +338,7 @@ class _DetailsPageState extends State<DetailsPage> {
                       ),
                     ],
                   ),
-                  buildSelectButton(size, isDarkMode),
+                  buildSelectButton(size, isDarkMode,widget.carPrice),
                 ],
               ),
             ),
@@ -410,7 +411,7 @@ class _DetailsPageState extends State<DetailsPage> {
   }
 }
 
-Align buildSelectButton(Size size, bool isDarkMode) {
+Align buildSelectButton(Size size, bool isDarkMode, int carPrice) {
   return Align(
     alignment: Alignment.bottomCenter,
     child: Padding(
@@ -421,7 +422,9 @@ Align buildSelectButton(Size size, bool isDarkMode) {
         height: size.height * 0.07,
         width: size.width,
         child: InkWell(
-          onTap: () {},
+          onTap: () {
+            Get.to(PaymentPage(carPrice: carPrice)); // Go to the PaymentPage
+          },
           child: Container(
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(15),
