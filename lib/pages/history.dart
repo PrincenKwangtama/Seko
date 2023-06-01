@@ -76,7 +76,7 @@ class _HistoryPageState extends State<HistoryPage> {
               },
             )
           : const Center(child: CircularProgressIndicator()),
-      bottomNavigationBar: buildBottomNavBar(0, MediaQuery.of(context).size, false),
+      bottomNavigationBar: buildBottomNavBar(2, MediaQuery.of(context).size, false),
     );
   }
 

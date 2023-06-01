@@ -48,7 +48,10 @@ class _ChatPageState extends State<ChatPage> {
           children: [
             Expanded(
               child: StreamBuilder<QuerySnapshot>(
-                stream: messagesCollection.orderBy('timestamp').snapshots(),
+                stream: messagesCollection
+                    .where('currentUserId', isEqualTo: widget.currentUserId)
+                    .where('anotherUserId', isEqualTo: widget.anotherUserId)
+                    .snapshots(),
                 builder: (context, snapshot) {
                   if (!snapshot.hasData) {
                     return const CircularProgressIndicator();
@@ -61,39 +64,51 @@ class _ChatPageState extends State<ChatPage> {
                     itemCount: messages.length,
                     itemBuilder: (context, index) {
                       final message = messages[index].get('text');
-                      final sender = messages[index].get('sender');
+                      final senderId = messages[index].get('senderId');
                       final currentUser = _auth.currentUser;
-                      final isCurrentUserMessage = sender == currentUser?.displayName;
 
-                      return Align(
-                        alignment: isCurrentUserMessage ? Alignment.centerRight : Alignment.centerLeft,
-                        child: Container(
-                          padding: const EdgeInsets.symmetric(vertical: 4.0, horizontal: 8.0),
-                          margin: const EdgeInsets.symmetric(vertical: 4.0, horizontal: 8.0),
-                          decoration: BoxDecoration(
-                            color: isCurrentUserMessage ? Colors.blue : Colors.grey,
-                            borderRadius: BorderRadius.circular(8.0),
-                          ),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                message,
-                                style: TextStyle(
-                                  color: isCurrentUserMessage ? Colors.white : Colors.black,
-                                  fontWeight: FontWeight.bold,
-                                ),
+                      return FutureBuilder<DocumentSnapshot>(
+                        future: _firestore.collection('users').doc(senderId).get(),
+                        builder: (context, snapshot) {
+                          if (!snapshot.hasData) {
+                            return const SizedBox(); // Display nothing while fetching user data
+                          }
+
+                          final senderName = snapshot.data!.get('name') as String?;
+
+                          final isCurrentUserMessage = senderId == currentUser?.uid;
+
+                          return Align(
+                            alignment: isCurrentUserMessage ? Alignment.centerRight : Alignment.centerLeft,
+                            child: Container(
+                              padding: const EdgeInsets.symmetric(vertical: 4.0, horizontal: 8.0),
+                              margin: const EdgeInsets.symmetric(vertical: 4.0, horizontal: 8.0),
+                              decoration: BoxDecoration(
+                                color: isCurrentUserMessage ? Colors.blue : Colors.grey,
+                                borderRadius: BorderRadius.circular(8.0),
                               ),
-                              const SizedBox(height: 4.0),
-                              Text(
-                                'Sent by: $sender',
-                                style: TextStyle(
-                                  color: isCurrentUserMessage ? Colors.white : Colors.black,
-                                ),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    message,
+                                    style: TextStyle(
+                                      color: isCurrentUserMessage ? Colors.white : Colors.black,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                  const SizedBox(height: 4.0),
+                                  Text(
+                                    'Sent by: $senderName',
+                                    style: TextStyle(
+                                      color: isCurrentUserMessage ? Colors.white : Colors.black,
+                                    ),
+                                  ),
+                                ],
                               ),
-                            ],
-                          ),
-                        ),
+                            ),
+                          );
+                        },
                       );
                     },
                   );
@@ -117,7 +132,9 @@ class _ChatPageState extends State<ChatPage> {
                     onPressed: () {
                       messagesCollection.add({
                         'text': _messageController.text,
-                        'sender': user.displayName,
+                        'senderId': user.uid,
+                        'currentUserId': widget.currentUserId,
+                        'anotherUserId': widget.anotherUserId,
                         'timestamp': FieldValue.serverTimestamp(),
                       });
                       _messageController.clear();

@@ -52,7 +52,7 @@ class AuthenticationService extends ChangeNotifier {
         'email': email,
         'id': user.uid,
         'name': name,
-        'status': 'status',
+        'status': 'user',
         'phoneNumber': '+621122223333',
         'profilePicture': 'assets/images/profile.jpg',
       });

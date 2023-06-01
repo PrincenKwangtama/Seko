@@ -77,8 +77,8 @@ class _ChatListPageState extends State<ChatListPage> {
       );
     } else {
       // Handle case where user is not authenticated
-      return Scaffold(
-        body: const Center(
+      return const Scaffold(
+        body: Center(
           child: Text('User not authenticated'),
         ),
       );
