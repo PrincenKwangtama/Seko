@@ -338,7 +338,7 @@ class _DetailsPageState extends State<DetailsPage> {
                       ),
                     ],
                   ),
-                  buildSelectButton(size, isDarkMode,widget.carPrice),
+                  buildSelectButton(size, isDarkMode,widget.carPrice,widget.carName,widget.carImage, widget.carRating),
                 ],
               ),
             ),
@@ -411,7 +411,7 @@ class _DetailsPageState extends State<DetailsPage> {
   }
 }
 
-Align buildSelectButton(Size size, bool isDarkMode, int carPrice) {
+Align buildSelectButton(Size size, bool isDarkMode, int carPrice, String carName, String carImage, String carRating) {
   return Align(
     alignment: Alignment.bottomCenter,
     child: Padding(
@@ -423,7 +423,7 @@ Align buildSelectButton(Size size, bool isDarkMode, int carPrice) {
         width: size.width,
         child: InkWell(
           onTap: () {
-            Get.to(PaymentPage(carPrice: carPrice)); // Go to the PaymentPage
+            Get.to(PaymentPage(carPrice: carPrice,carName: carName,carImage: carImage,carRating: carRating)); // Go to the PaymentPage
           },
           child: Container(
             decoration: BoxDecoration(
