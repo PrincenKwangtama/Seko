@@ -134,8 +134,8 @@ class _DetailsPageState extends State<DetailsPage> {
                       widget.isRotated
                           ? Image.network(
                               widget.carImage,
-                              height: size.width * 0.5,
-                              width: size.width * 0.8,
+                              height: size.width * 0.3,
+                              width: size.width * 0.5,
                               fit: BoxFit.contain,
                             )
                           : Transform(
@@ -143,8 +143,8 @@ class _DetailsPageState extends State<DetailsPage> {
                               transform: Matrix4.rotationY(pi),
                               child: Image.network(
                                 widget.carImage,
-                                height: size.width * 0.5,
-                                width: size.width * 0.8,
+                                height: size.width * 0.3,
+                                width: size.width * 0.5,
                                 fit: BoxFit.contain,
                               ),
                             ),

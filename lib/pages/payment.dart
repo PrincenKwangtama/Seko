@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:car_rental/widgets/bottom_nav_bar.dart';
 import 'package:car_rental/pages/home_page.dart';
 
@@ -38,6 +39,27 @@ class PaymentPage extends StatefulWidget {
 class _PaymentPageState extends State<PaymentPage> {
   int carDayRent = 1;
   String paymentOption = 'Cash'; // Default payment option
+
+  void addOrderToFirestore() {
+    // Generate a random orderId
+    final String orderId = DateTime.now().millisecondsSinceEpoch.toString();
+
+    // Create a map containing the order details
+    final orderData = {
+      'userId': widget.userId,
+      'carId': widget.carId,
+      'orderId': orderId,
+      'carName': widget.carName,
+      'carImage': widget.carImage,
+      'totalPrice': carDayRent * widget.carPrice,
+      'paymentOption': paymentOption,
+      'currentDate': DateTime.now(),
+      'endDate': DateTime.now().add(Duration(days: carDayRent)),
+    };
+
+    // Insert the order data into the Firestore collection named 'order'
+    FirebaseFirestore.instance.collection('order').doc(orderId).set(orderData);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -81,7 +103,7 @@ class _PaymentPageState extends State<PaymentPage> {
                   height: 100,
                   width: 100,
                   child: Image.network(
-                    widget.carImage
+                    widget.carImage,
                   ),
                 ),
                 Expanded(
@@ -229,6 +251,7 @@ class _PaymentPageState extends State<PaymentPage> {
                                     ElevatedButton(
                                       onPressed: () {
                                         Navigator.of(context).pop();
+                                        addOrderToFirestore(); // Insert order data into Firestore
                                       },
                                       child: const Text('OK'),
                                     ),
