@@ -4,6 +4,8 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:unicons/unicons.dart';
 import 'package:car_rental/pages/maps.dart';
 import 'package:car_rental/pages/payment.dart';
@@ -20,6 +22,7 @@ class DetailsPage extends StatefulWidget {
   final int carPrice;
   final String carRating;
   final bool isRotated;
+  
 
   const DetailsPage({
     Key? key,
@@ -340,7 +343,7 @@ class _DetailsPageState extends State<DetailsPage> {
                       ),
                     ],
                   ),
-                  buildSelectButton(size, isDarkMode,widget.carPrice,widget.carName,widget.carImage, widget.carRating),
+                  buildSelectButton(size, isDarkMode,widget.carPrice,widget.carName,widget.carImage, widget.carRating, widget.carId),
                 ],
               ),
             ),
@@ -413,39 +416,110 @@ class _DetailsPageState extends State<DetailsPage> {
   }
 }
 
-Align buildSelectButton(Size size, bool isDarkMode, int carPrice, String carName, String carImage, String carRating) {
-  return Align(
-    alignment: Alignment.bottomCenter,
-    child: Padding(
-      padding: EdgeInsets.only(
-        bottom: size.height * 0.01,
-      ),
-      child: SizedBox(
-        height: size.height * 0.07,
-        width: size.width,
-        child: InkWell(
-          onTap: () {
-            Get.to(PaymentPage(carPrice: carPrice,carName: carName,carImage: carImage,carRating: carRating)); // Go to the PaymentPage
+Align buildSelectButton(
+    Size size, bool isDarkMode, int carPrice, String carName, String carImage, String carRating, String carId) {
+  final user = FirebaseAuth.instance.currentUser;
+  if (user != null) {
+    return Align(
+      alignment: Alignment.bottomCenter,
+      child: Padding(
+        padding: EdgeInsets.only(
+          bottom: size.height * 0.01,
+        ),
+        child: StreamBuilder<DocumentSnapshot>(
+          stream: FirebaseFirestore.instance
+              .collection('users')
+              .doc(user.uid)
+              .snapshots(),
+          builder: (context, snapshot) {
+            if (snapshot.hasData) {
+              final userDocument = snapshot.data!;
+              final id = userDocument['id'];
+              final name = userDocument['name'];
+              final email = userDocument['email'];
+              final phoneNumber = userDocument['phoneNumber'];
+              final status = userDocument['status'];
+              final profilePicture = userDocument['profilePicture'];
+
+              return SizedBox(
+                height: size.height * 0.07,
+                width: size.width,
+                child: InkWell(
+                  onTap: () {
+                    Get.to(PaymentPage(
+                      carPrice: carPrice,
+                      carName: carName,
+                      carImage: carImage,
+                      carRating: carRating,
+                      carId: carId,
+                      userId: id,
+                      userName: name,
+                      userEmail: email,
+                      userPhoneNumber: phoneNumber,
+                      userStatus: status,
+                      userProfilePicture: profilePicture,
+                    )); // Go to the PaymentPage
+                  },
+                  child: Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(15),
+                      color: const Color(0xff3b22a1),
+                    ),
+                    child: Align(
+                      child: Text(
+                        'Select',
+                        textAlign: TextAlign.center,
+                        style: GoogleFonts.lato(
+                          fontSize: size.height * 0.025,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white,
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              );
+            } else {
+              return const CircularProgressIndicator();
+            }
           },
-          child: Container(
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(15),
-              color: const Color(0xff3b22a1),
-            ),
-            child: Align(
-              child: Text(
-                'Select',
-                textAlign: TextAlign.center,
-                style: GoogleFonts.lato(
-                  fontSize: size.height * 0.025,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.white,
+        ),
+      ),
+    );
+  } else {
+    return Align(
+      alignment: Alignment.bottomCenter,
+      child: Padding(
+        padding: EdgeInsets.only(
+          bottom: size.height * 0.01,
+        ),
+        child: SizedBox(
+          height: size.height * 0.07,
+          width: size.width,
+          child: InkWell(
+            onTap: () {
+              // Handle when the user is not logged in
+            },
+            child: Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(15),
+                color: const Color(0xff3b22a1),
+              ),
+              child: Align(
+                child: Text(
+                  'Select',
+                  textAlign: TextAlign.center,
+                  style: GoogleFonts.lato(
+                    fontSize: size.height * 0.025,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white,
+                  ),
                 ),
               ),
             ),
           ),
         ),
       ),
-    ),
-  );
+    );
+  }
 }

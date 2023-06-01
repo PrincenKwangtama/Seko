@@ -8,6 +8,13 @@ class PaymentPage extends StatefulWidget {
   final String carName;
   final String carImage;
   final String carRating;
+  final String carId;
+  final String userId;
+  final String userName;
+  final String userEmail;
+  final String userPhoneNumber;
+  final String userStatus;
+  final String userProfilePicture;
 
   const PaymentPage({
     Key? key,
@@ -15,6 +22,13 @@ class PaymentPage extends StatefulWidget {
     required this.carName,
     required this.carImage,
     required this.carRating,
+    required this.carId,
+    required this.userId,
+    required this.userName,
+    required this.userEmail,
+    required this.userPhoneNumber,
+    required this.userStatus,
+    required this.userProfilePicture,
   }) : super(key: key);
 
   @override
