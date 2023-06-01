@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:car_rental/widgets/bottom_nav_bar.dart';
-import 'package:car_rental/pages/home_page.dart';
+import 'package:car_rental/pages/chat_list.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
@@ -34,7 +34,7 @@ class _ChatPageState extends State<ChatPage> {
           leading: IconButton(
             icon: const Icon(Icons.arrow_back),
             onPressed: () {
-              Get.off(const HomePage());
+              Get.off( ChatListPage());
             },
           ),
           title: const Text(
@@ -48,10 +48,7 @@ class _ChatPageState extends State<ChatPage> {
           children: [
             Expanded(
               child: StreamBuilder<QuerySnapshot>(
-                stream: messagesCollection
-                    .where('currentUserId', isEqualTo: widget.currentUserId)
-                    .where('anotherUserId', isEqualTo: widget.anotherUserId)
-                    .snapshots(),
+                stream: messagesCollection.snapshots(),
                 builder: (context, snapshot) {
                   if (!snapshot.hasData) {
                     return const CircularProgressIndicator();
@@ -59,12 +56,20 @@ class _ChatPageState extends State<ChatPage> {
 
                   final messages = snapshot.data!.docs.reversed.toList();
 
+                  final filteredMessages = messages.where((message) {
+                    final currentUserId = message.get('currentUserId') as String?;
+                    final anotherUserId = message.get('anotherUserId') as String?;
+
+                    return (currentUserId == widget.currentUserId && anotherUserId == widget.anotherUserId) ||
+                        (currentUserId == widget.anotherUserId && anotherUserId == widget.currentUserId);
+                  }).toList();
+
                   return ListView.builder(
                     reverse: true,
-                    itemCount: messages.length,
+                    itemCount: filteredMessages.length,
                     itemBuilder: (context, index) {
-                      final message = messages[index].get('text');
-                      final senderId = messages[index].get('senderId');
+                      final message = filteredMessages[index].get('text');
+                      final senderId = filteredMessages[index].get('senderId');
                       final currentUser = _auth.currentUser;
 
                       return FutureBuilder<DocumentSnapshot>(

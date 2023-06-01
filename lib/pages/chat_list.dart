@@ -50,10 +50,16 @@ class _ChatListPageState extends State<ChatListPage> {
                 final userData = users[index].data() as Map<String, dynamic>;
                 final userId = users[index].id;
                 final userName = userData['name'];
+                final userProfilePicture = userData['profilePicture'];
+                final userStatus = userData['status'];
 
                 if (userId != user.uid) {
                   return ListTile(
+                    leading: CircleAvatar(
+                      backgroundImage: NetworkImage(userProfilePicture),
+                    ),
                     title: Text(userName),
+                    subtitle: Text('($userStatus)'),
                     onTap: () {
                       Navigator.push(
                         context,

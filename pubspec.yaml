@@ -84,7 +84,8 @@ flutter:
     - assets/images/profile.jpg
     - assets/images/seko.png
     
-
+flutter_icons:
+  image_path: "assets/images/seko.png"
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
