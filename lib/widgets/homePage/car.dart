@@ -36,6 +36,7 @@ Padding buildCar(int i, Size size, bool isDarkMode, data) {
                   carClass: data.docs[i]['carClass'],
                   carName: data.docs[i]['carName'],
                   carPower: data.docs[i]['carPower'],
+                  carId: data.docs[i]['carId'],
                   people: data.docs[i]['people'],
                   bags: data.docs[i]['bags'],
                   carPrice: data.docs[i]['carPrice'],

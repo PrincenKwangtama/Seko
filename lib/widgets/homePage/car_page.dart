@@ -81,6 +81,7 @@ class CarPage extends StatelessWidget {
                       carClass: carData['carClass'],
                       carName: carData['carName'],
                       carPower: carData['carPower'],
+                      carId: carData[i]['carId'],
                       people: carData['people'],
                       bags: carData['bags'],
                       carPrice: carData['carPrice'],

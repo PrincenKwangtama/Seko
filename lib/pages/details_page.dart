@@ -14,6 +14,7 @@ class DetailsPage extends StatefulWidget {
   final String carClass;
   final String carName;
   final int carPower;
+  final String carId;
   final String people;
   final String bags;
   final int carPrice;
@@ -27,6 +28,7 @@ class DetailsPage extends StatefulWidget {
     required this.carClass,
     required this.carName,
     required this.carPower,
+    required this.carId,
     required this.people,
     required this.bags,
     required this.carPrice,

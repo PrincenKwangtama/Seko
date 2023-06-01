@@ -23,6 +23,7 @@ class PaymentPage extends StatefulWidget {
 
 class _PaymentPageState extends State<PaymentPage> {
   int carDayRent = 1;
+  String paymentOption = 'Cash'; // Default payment option
 
   @override
   Widget build(BuildContext context) {
@@ -40,7 +41,7 @@ class _PaymentPageState extends State<PaymentPage> {
         ),
         title: const Text(
           'Payment',
-          style: TextStyle(color: Color.fromARGB(255, 47, 42, 42)),
+          style: TextStyle(color: Color.fromARGB(255, 47, 42, 42), fontSize: 20),
         ),
         backgroundColor: const Color.fromARGB(255, 255, 203, 47),
         centerTitle: true,
@@ -62,99 +63,170 @@ class _PaymentPageState extends State<PaymentPage> {
                     style: const TextStyle(fontSize: 16),
                   ),
                 ),
-                SizedBox(
-                  height: 150,
-                  width: double.infinity,
+                Container(
+                  height: 100,
+                  width: 100,
                   child: Image.network(
-                    widget.carImage,
-                    fit: BoxFit.cover,
+                    widget.carImage
                   ),
                 ),
-                Padding(
-                  padding: const EdgeInsets.all(16.0),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        'Car Price: \$${widget.carPrice}',
-                        style: const TextStyle(fontSize: 20),
-                      ),
-                      const SizedBox(height: 10),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            'Days of Rent',
-                            style: const TextStyle(fontSize: 20),
-                          ),
-                          Row(
-                            children: [
-                              IconButton(
-                                onPressed: () {
-                                  setState(() {
-                                    if (carDayRent > 1) {
-                                      carDayRent--;
-                                    }
-                                  });
-                                },
-                                icon: const Icon(Icons.remove),
-                              ),
-                              Text(
-                                carDayRent.toString(),
-                                style: const TextStyle(fontSize: 20),
-                              ),
-                              IconButton(
-                                onPressed: () {
-                                  setState(() {
-                                    carDayRent++;
-                                  });
-                                },
-                                icon: const Icon(Icons.add),
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
-                      const SizedBox(height: 20),
-                      Text(
-                        'Total Amount: \$$totalPrice',
-                        style: const TextStyle(fontSize: 20),
-                      ),
-                      const SizedBox(height: 20),
-                      Text(
-                        'Start of Rental: ${currentDate.toString()}',
-                        style: const TextStyle(fontSize: 16),
-                      ),
-                      Text(
-                        'End of Rental: ${endDate.toString()}',
-                        style: const TextStyle(fontSize: 16),
-                      ),
-                      const SizedBox(height: 20),
-                      ElevatedButton(
-                        onPressed: () {
-                          // Add your payment logic here
-                          // This is just a placeholder for demonstration purposes
-                          showDialog(
-                            context: context,
-                            builder: (BuildContext context) {
-                              return AlertDialog(
-                                title: const Text('Payment Successful'),
-                                content: const Text('Thank you for your payment!'),
-                                actions: [
-                                  ElevatedButton(
-                                    onPressed: () {
-                                      Navigator.of(context).pop();
-                                    },
-                                    child: const Text('OK'),
+                Expanded(
+                  child: Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          'Car Price: \$${widget.carPrice}',
+                          style: const TextStyle(fontSize: 20),
+                        ),
+                        const SizedBox(height: 8),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              'Days of Rent',
+                              style: const TextStyle(fontSize: 20),
+                            ),
+                            Row(
+                              children: [
+                                IconButton(
+                                  onPressed: () {
+                                    setState(() {
+                                      if (carDayRent > 1) {
+                                        carDayRent--;
+                                      }
+                                    });
+                                  },
+                                  icon: const Icon(Icons.remove),
+                                  iconSize: 20,
+                                ),
+                                Text(
+                                  carDayRent.toString(),
+                                  style: const TextStyle(fontSize: 20),
+                                ),
+                                IconButton(
+                                  onPressed: () {
+                                    setState(() {
+                                      carDayRent++;
+                                    });
+                                  },
+                                  icon: const Icon(Icons.add),
+                                  iconSize: 20,
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                        const SizedBox(height: 16),
+                        Text(
+                          'Total Amount: \$$totalPrice',
+                          style: const TextStyle(fontSize: 20),
+                        ),
+                        const SizedBox(height: 16),
+                        Text(
+                          'Start of Rental: ${currentDate.toString()}',
+                          style: const TextStyle(fontSize: 16),
+                        ),
+                        Text(
+                          'End of Rental: ${endDate.toString()}',
+                          style: const TextStyle(fontSize: 16),
+                        ),
+                        const SizedBox(height: 16),
+                        Text(
+                          'Payment Option:',
+                          style: const TextStyle(fontSize: 16),
+                        ),
+                        const SizedBox(height: 8),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            GestureDetector(
+                              onTap: () {
+                                setState(() {
+                                  paymentOption = 'Cash';
+                                });
+                              },
+                              child: Column(
+                                children: [
+                                  Icon(
+                                    Icons.money,
+                                    size: 20,
+                                    color: paymentOption == 'Cash'
+                                        ? Colors.green
+                                        : Colors.grey,
+                                  ),
+                                  const SizedBox(height: 4),
+                                  Text(
+                                    'Cash',
+                                    style: TextStyle(
+                                      fontSize: 16,
+                                      color: paymentOption == 'Cash'
+                                          ? Colors.green
+                                          : Colors.grey,
+                                    ),
                                   ),
                                 ],
-                              );
-                            },
-                          );
-                        },
-                        child: const Text('Make Payment'),
-                      ),
-                    ],
+                              ),
+                            ),
+                            const SizedBox(width: 16),
+                            GestureDetector(
+                              onTap: () {
+                                setState(() {
+                                  paymentOption = 'Credit Card';
+                                });
+                              },
+                              child: Column(
+                                children: [
+                                  Icon(
+                                    Icons.credit_card,
+                                    size: 20,
+                                    color: paymentOption == 'Credit Card'
+                                        ? Colors.green
+                                        : Colors.grey,
+                                  ),
+                                  const SizedBox(height: 4),
+                                  Text(
+                                    'Credit Card',
+                                    style: TextStyle(
+                                      fontSize: 16,
+                                      color: paymentOption == 'Credit Card'
+                                          ? Colors.green
+                                          : Colors.grey,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+                        const SizedBox(height: 16),
+                        ElevatedButton(
+                          onPressed: () {
+                            // Add your payment logic here
+                            // This is just a placeholder for demonstration purposes
+                            showDialog(
+                              context: context,
+                              builder: (BuildContext context) {
+                                return AlertDialog(
+                                  title: const Text('Payment Successful'),
+                                  content: const Text('Thank you for your payment!'),
+                                  actions: [
+                                    ElevatedButton(
+                                      onPressed: () {
+                                        Navigator.of(context).pop();
+                                      },
+                                      child: const Text('OK'),
+                                    ),
+                                  ],
+                                );
+                              },
+                            );
+                          },
+                          child: const Text('Make Payment'),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ],
