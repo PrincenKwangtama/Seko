@@ -98,9 +98,9 @@ class _PaymentPageState extends State<PaymentPage> {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Text(
+                            const Text(
                               'Days of Rent',
-                              style: const TextStyle(fontSize: 20),
+                              style: TextStyle(fontSize: 20),
                             ),
                             Row(
                               children: [
@@ -147,9 +147,9 @@ class _PaymentPageState extends State<PaymentPage> {
                           style: const TextStyle(fontSize: 16),
                         ),
                         const SizedBox(height: 16),
-                        Text(
+                        const Text(
                           'Payment Option:',
-                          style: const TextStyle(fontSize: 16),
+                          style: TextStyle(fontSize: 16),
                         ),
                         const SizedBox(height: 8),
                         Row(
