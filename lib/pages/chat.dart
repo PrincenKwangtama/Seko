@@ -6,7 +6,11 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
 
 class ChatPage extends StatefulWidget {
-  const ChatPage({Key? key}) : super(key: key);
+  final String currentUserId;
+  final String anotherUserId;
+
+  const ChatPage({Key? key, required this.currentUserId, required this.anotherUserId})
+      : super(key: key);
 
   @override
   _ChatPageState createState() => _ChatPageState();

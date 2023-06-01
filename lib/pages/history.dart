@@ -109,7 +109,7 @@ class _HistoryPageState extends State<HistoryPage> {
             ],
           ),
           trailing: IconButton(
-            icon: Icon(Icons.delete),
+            icon: Icon(Icons.keyboard_return),
             onPressed: () {
               deleteOrder(orderRef);
             },

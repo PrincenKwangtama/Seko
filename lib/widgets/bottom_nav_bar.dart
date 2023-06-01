@@ -1,3 +1,4 @@
+import 'package:car_rental/pages/chat_list.dart';
 import 'package:car_rental/pages/history.dart';
 import 'package:car_rental/pages/home_page.dart';
 import 'package:car_rental/pages/profile.dart';
@@ -24,7 +25,7 @@ Widget buildBottomNavBar(int currIndex, Size size, bool isDarkMode) {
           Get.off(const HomePage());
         }
         if (value == 1) {
-          Get.off(const ChatPage());
+          Get.off( ChatListPage());
         }
         if (value == 2) {
           Get.off( HistoryPage());
