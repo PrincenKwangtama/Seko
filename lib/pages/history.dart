@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:car_rental/widgets/bottom_nav_bar.dart';
 import 'package:car_rental/pages/home_page.dart';
+import 'package:get/get.dart';
 
 class HistoryPage extends StatefulWidget {
   @override
@@ -9,30 +11,14 @@ class HistoryPage extends StatefulWidget {
 }
 
 class _HistoryPageState extends State<HistoryPage> {
-  late Future<DocumentSnapshot> _userFuture;
+  late String userId;
 
   @override
   void initState() {
     super.initState();
-    _userFuture = fetchUserDocument();
-  }
+    userId = FirebaseAuth.instance.currentUser!.uid;
 
-  Future<DocumentSnapshot> fetchUserDocument() async {
-    final QuerySnapshot orderSnapshot = await FirebaseFirestore.instance
-        .collection('order')
-        .orderBy('currentDate', descending: true)
-        .get();
-
-    if (orderSnapshot.docs.isNotEmpty) {
-      final DocumentSnapshot userSnapshot = await FirebaseFirestore.instance
-          .collection('users')
-          .doc(orderSnapshot.docs[0]['userId']) // Assuming userId is stored in the 'userId' field of the 'order' collection
-          .get();
-
-      return userSnapshot;
-    }
-
-    throw Exception('No order history found');
+    print('Current User ID: $userId');
   }
 
   @override
@@ -42,10 +28,7 @@ class _HistoryPageState extends State<HistoryPage> {
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
           onPressed: () {
-            Navigator.pushReplacement(
-              context,
-              MaterialPageRoute(builder: (context) => HomePage()),
-            );
+            Get.off(const HomePage());
           },
         ),
         title: const Text(
@@ -55,42 +38,36 @@ class _HistoryPageState extends State<HistoryPage> {
         backgroundColor: const Color.fromARGB(255, 255, 203, 47),
         centerTitle: true,
       ),
-      body: FutureBuilder<DocumentSnapshot>(
-        future: _userFuture,
-        builder: (context, userSnapshot) {
-          if (userSnapshot.hasError) {
-            return const Center(child: Text('Error fetching user information'));
+      body: StreamBuilder<QuerySnapshot>(
+        stream: FirebaseFirestore.instance
+            .collection('order')
+            .where('userId', isEqualTo: userId)
+            .snapshots(),
+        builder: (context, snapshot) {
+          if (snapshot.hasError) {
+            return const Center(child: Text('Error fetching order history'));
           }
-          if (userSnapshot.connectionState == ConnectionState.waiting) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
             return const Center(child: CircularProgressIndicator());
           }
-          final userDocument = userSnapshot.data!;
-          final userId = userDocument['id'];
+          final data = snapshot.data!.docs;
+          if (data.isEmpty) {
+            return const Center(child: Text('No order history found'));
+          }
+          return ListView.builder(
+            itemCount: data.length,
+            itemBuilder: (context, index) {
+              final orderData = data[index].data() as Map<String, dynamic>;
+              final orderUserId = orderData['userId'];
 
-          return StreamBuilder<QuerySnapshot>(
-            stream: FirebaseFirestore.instance
-                .collection('order')
-                .where('userId', isEqualTo: userId)
-                .orderBy('currentDate', descending: true)
-                .snapshots(),
-            builder: (context, snapshot) {
-              if (snapshot.hasError) {
-                return const Center(child: Text('Error fetching order history'));
+              print('Order User ID: $orderUserId');
+
+              if (userId == orderUserId) {
+                return buildOrderItem(orderData);
+              } else {
+                // User ID does not match, skip this order item
+                return Container();
               }
-              if (snapshot.connectionState == ConnectionState.waiting) {
-                return const Center(child: CircularProgressIndicator());
-              }
-              final data = snapshot.data!.docs;
-              if (data.isEmpty) {
-                return const Center(child: Text('No order history found'));
-              }
-              return ListView.builder(
-                itemCount: data.length,
-                itemBuilder: (context, index) {
-                  final orderData = data[index].data() as Map<String, dynamic>;
-                  return buildOrderItem(orderData);
-                },
-              );
             },
           );
         },
@@ -109,23 +86,24 @@ class _HistoryPageState extends State<HistoryPage> {
 
     return Padding(
       padding: const EdgeInsets.all(8.0),
-      child: ListTile(
-        leading: Image.network(
-          carImage,
-          height: 50,
-          width: 50,
-          fit: BoxFit.cover,
-        ),
-        title: Text(carName),
-        subtitle: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const SizedBox(height: 4),
-            Text('Total Price: \$${totalPrice.toString()}'),
-            Text('Start Date: ${startDate.toString()}'),
-            Text('End Date: ${endDate.toString()}'),
-            Text('Payment Option: $paymentOption'),
-          ],
+      child: Card(
+        child: ListTile(
+          leading: Image.network(
+            carImage,
+            height: 50,
+            width: 50,
+          ),
+          title: Text(carName),
+          subtitle: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const SizedBox(height: 4),
+              Text('Total Price: \$${totalPrice.toString()}'),
+              Text('Start Date: ${startDate.toString()}'),
+              Text('End Date: ${endDate.toString()}'),
+              Text('Payment Option: $paymentOption'),
+            ],
+          ),
         ),
       ),
     );
