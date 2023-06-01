@@ -12,6 +12,7 @@ class HistoryPage extends StatefulWidget {
 
 class _HistoryPageState extends State<HistoryPage> {
   late String userId;
+  late List<DocumentReference> orderRefs = []; // Added variable to store order references
 
   @override
   void initState() {
@@ -19,6 +20,20 @@ class _HistoryPageState extends State<HistoryPage> {
     userId = FirebaseAuth.instance.currentUser!.uid;
 
     print('Current User ID: $userId');
+
+    // Retrieve order references before entering StreamBuilder
+    getOrderRefs();
+  }
+
+  void getOrderRefs() async {
+    final snapshot = await FirebaseFirestore.instance
+        .collection('order')
+        .where('userId', isEqualTo: userId)
+        .get();
+
+    setState(() {
+      orderRefs = snapshot.docs.map((doc) => doc.reference).toList();
+    });
   }
 
   @override
@@ -38,45 +53,34 @@ class _HistoryPageState extends State<HistoryPage> {
         backgroundColor: const Color.fromARGB(255, 255, 203, 47),
         centerTitle: true,
       ),
-      body: StreamBuilder<QuerySnapshot>(
-        stream: FirebaseFirestore.instance
-            .collection('order')
-            .where('userId', isEqualTo: userId)
-            .snapshots(),
-        builder: (context, snapshot) {
-          if (snapshot.hasError) {
-            return const Center(child: Text('Error fetching order history'));
-          }
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return const Center(child: CircularProgressIndicator());
-          }
-          final data = snapshot.data!.docs;
-          if (data.isEmpty) {
-            return const Center(child: Text('No order history found'));
-          }
-          return ListView.builder(
-            itemCount: data.length,
-            itemBuilder: (context, index) {
-              final orderData = data[index].data() as Map<String, dynamic>;
-              final orderUserId = orderData['userId'];
-
-              print('Order User ID: $orderUserId');
-
-              if (userId == orderUserId) {
-                return buildOrderItem(orderData);
-              } else {
-                // User ID does not match, skip this order item
-                return Container();
-              }
-            },
-          );
-        },
-      ),
+      body: orderRefs != null
+          ? ListView.builder(
+              itemCount: orderRefs.length,
+              itemBuilder: (context, index) {
+                return StreamBuilder<DocumentSnapshot>(
+                  stream: orderRefs[index].snapshots(),
+                  builder: (context, snapshot) {
+                    if (snapshot.hasError) {
+                      return const Center(child: Text('Error fetching order data'));
+                    }
+                    if (snapshot.connectionState == ConnectionState.waiting) {
+                      return const Center(child: CircularProgressIndicator());
+                    }
+                    final orderData = snapshot.data!.data() as Map<String, dynamic>?;
+                    if (orderData == null) {
+                      return const SizedBox(); // Skip this order if data is missing
+                    }
+                    return buildOrderItem(orderData, orderRefs[index]);
+                  },
+                );
+              },
+            )
+          : const Center(child: CircularProgressIndicator()),
       bottomNavigationBar: buildBottomNavBar(0, MediaQuery.of(context).size, false),
     );
   }
 
-  Widget buildOrderItem(Map<String, dynamic> orderData) {
+  Widget buildOrderItem(Map<String, dynamic> orderData, DocumentReference orderRef) {
     final String carName = orderData['carName'];
     final String carImage = orderData['carImage'];
     final int totalPrice = orderData['totalPrice'];
@@ -104,8 +108,24 @@ class _HistoryPageState extends State<HistoryPage> {
               Text('Payment Option: $paymentOption'),
             ],
           ),
+          trailing: IconButton(
+            icon: Icon(Icons.delete),
+            onPressed: () {
+              deleteOrder(orderRef);
+            },
+          ),
         ),
       ),
     );
+  }
+
+  void deleteOrder(DocumentReference orderRef) {
+    orderRef.delete().then((value) {
+      print('Order deleted successfully');
+      // Show a snackbar or any other indication of successful deletion
+    }).catchError((error) {
+      print('Failed to delete order: $error');
+      // Show an error message or any other indication of failure
+    });
   }
 }
