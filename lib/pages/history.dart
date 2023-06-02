@@ -12,7 +12,8 @@ class HistoryPage extends StatefulWidget {
 
 class _HistoryPageState extends State<HistoryPage> {
   late String userId;
-  late List<DocumentReference> orderRefs = []; // Added variable to store order references
+  late List<DocumentReference> ongoingOrderRefs = []; // Order references for ongoing orders
+  late List<DocumentReference> completeOrderRefs = []; // Order references for complete orders
 
   @override
   void initState() {
@@ -32,7 +33,14 @@ class _HistoryPageState extends State<HistoryPage> {
         .get();
 
     setState(() {
-      orderRefs = snapshot.docs.map((doc) => doc.reference).toList();
+      ongoingOrderRefs = snapshot.docs
+          .where((doc) => doc['orderStatus'] == 'ongoing')
+          .map((doc) => doc.reference)
+          .toList();
+      completeOrderRefs = snapshot.docs
+          .where((doc) => doc['orderStatus'] == 'complete')
+          .map((doc) => doc.reference)
+          .toList();
     });
   }
 
@@ -53,29 +61,76 @@ class _HistoryPageState extends State<HistoryPage> {
         backgroundColor: const Color.fromARGB(255, 255, 203, 47),
         centerTitle: true,
       ),
-      body: orderRefs != null
-          ? ListView.builder(
-              itemCount: orderRefs.length,
-              itemBuilder: (context, index) {
-                return StreamBuilder<DocumentSnapshot>(
-                  stream: orderRefs[index].snapshots(),
-                  builder: (context, snapshot) {
-                    if (snapshot.hasError) {
-                      return const Center(child: Text('Error fetching order data'));
-                    }
-                    if (snapshot.connectionState == ConnectionState.waiting) {
-                      return const Center(child: CircularProgressIndicator());
-                    }
-                    final orderData = snapshot.data!.data() as Map<String, dynamic>?;
-                    if (orderData == null) {
-                      return const SizedBox(); // Skip this order if data is missing
-                    }
-                    return buildOrderItem(orderData, orderRefs[index]);
-                  },
-                );
-              },
-            )
-          : const Center(child: CircularProgressIndicator()),
+      body: Column(
+        children: [
+          if (ongoingOrderRefs.isNotEmpty)
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Text(
+                'Ongoing Orders',
+                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              ),
+            ),
+          if (ongoingOrderRefs.isNotEmpty)
+            Expanded(
+              child: ListView.builder(
+                itemCount: ongoingOrderRefs.length,
+                itemBuilder: (context, index) {
+                  return StreamBuilder<DocumentSnapshot>(
+                    stream: ongoingOrderRefs[index].snapshots(),
+                    builder: (context, snapshot) {
+                      if (snapshot.hasError) {
+                        return const Center(child: Text('Error fetching order data'));
+                      }
+                      if (snapshot.connectionState == ConnectionState.waiting) {
+                        return const Center(child: CircularProgressIndicator());
+                      }
+                      final orderData = snapshot.data!.data() as Map<String, dynamic>?;
+                      if (orderData == null) {
+                        return const SizedBox(); // Skip this order if data is missing
+                      }
+                      return buildOrderItem(orderData, ongoingOrderRefs[index]);
+                    },
+                  );
+                },
+              ),
+            ),
+          if (completeOrderRefs.isNotEmpty)
+            const SizedBox(height: 16), // Add some spacing between the sections
+          if (completeOrderRefs.isNotEmpty)
+            const Padding(
+              padding: EdgeInsets.all(8.0),
+              child: Text(
+                'Complete Orders',
+                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              ),
+            ),
+          if (completeOrderRefs.isNotEmpty)
+            Expanded(
+              child: ListView.builder(
+                itemCount: completeOrderRefs.length,
+                itemBuilder: (context, index) {
+                  return StreamBuilder<DocumentSnapshot>(
+                    stream: completeOrderRefs[index].snapshots(),
+                    builder: (context, snapshot) {
+                      if (snapshot.hasError) {
+                        return const Center(child: Text('Error fetching order data'));
+                      }
+                      if (snapshot.connectionState == ConnectionState.waiting) {
+                        return const Center(child: CircularProgressIndicator());
+                      }
+                      final orderData = snapshot.data!.data() as Map<String, dynamic>?;
+                      if (orderData == null) {
+                        return const SizedBox(); // Skip this order if data is missing
+                      }
+                      return buildOrderItem(orderData, completeOrderRefs[index]);
+                    },
+                  );
+                },
+              ),
+            ),
+        ],
+      ),
       bottomNavigationBar: buildBottomNavBar(2, MediaQuery.of(context).size, false),
     );
   }
@@ -83,6 +138,7 @@ class _HistoryPageState extends State<HistoryPage> {
   Widget buildOrderItem(Map<String, dynamic> orderData, DocumentReference orderRef) {
     final String carName = orderData['carName'];
     final String carImage = orderData['carImage'];
+    final String orderStatus = orderData['orderStatus'];
     final int totalPrice = orderData['totalPrice'];
     final DateTime startDate = orderData['currentDate'].toDate();
     final DateTime endDate = orderData['endDate'].toDate();
@@ -109,7 +165,7 @@ class _HistoryPageState extends State<HistoryPage> {
             ],
           ),
           trailing: IconButton(
-            icon: Icon(Icons.keyboard_return),
+            icon: const Icon(Icons.keyboard_return),
             onPressed: () {
               deleteOrder(orderRef);
             },

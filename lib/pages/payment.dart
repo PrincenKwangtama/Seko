@@ -49,6 +49,7 @@ class _PaymentPageState extends State<PaymentPage> {
       'userId': widget.userId,
       'carId': widget.carId,
       'orderId': orderId,
+      "orderStatus": 'ongoing',
       'carName': widget.carName,
       'carImage': widget.carImage,
       'totalPrice': carDayRent * widget.carPrice,
@@ -99,7 +100,7 @@ class _PaymentPageState extends State<PaymentPage> {
                     style: const TextStyle(fontSize: 16),
                   ),
                 ),
-                Container(
+                SizedBox(
                   height: 100,
                   width: 100,
                   child: Image.network(

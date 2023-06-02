@@ -26,7 +26,7 @@ class CarPage extends StatelessWidget {
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
           onPressed: () {
-            Get.off(const HomePage());;
+            Get.off(const HomePage());
           },
         ),
       ),
