@@ -2,7 +2,6 @@ import 'package:car_rental/pages/chat_list.dart';
 import 'package:car_rental/pages/history.dart';
 import 'package:car_rental/pages/home_page.dart';
 import 'package:car_rental/pages/profile.dart';
-import 'package:car_rental/pages/chat.dart';
 import 'package:car_rental/widgets/bottom_nav_item.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';

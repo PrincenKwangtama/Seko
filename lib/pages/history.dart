@@ -98,8 +98,8 @@ class _HistoryPageState extends State<HistoryPage> {
           if (completeOrderRefs.isNotEmpty)
             const SizedBox(height: 16), // Add some spacing between the sections
           if (completeOrderRefs.isNotEmpty)
-            const Padding(
-              padding: EdgeInsets.all(8.0),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
               child: Text(
                 'Complete Orders',
                 style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
@@ -144,6 +144,27 @@ class _HistoryPageState extends State<HistoryPage> {
     final DateTime endDate = orderData['endDate'].toDate();
     final String paymentOption = orderData['paymentOption'];
 
+    IconData trailingIcon;
+    VoidCallback trailingIconAction;
+
+    if (orderStatus == 'ongoing') {
+      trailingIcon = Icons.keyboard_return;
+      trailingIconAction = () {
+        changeOrderStatus(orderRef);
+      };
+    } else if (orderStatus == 'complete') {
+      trailingIcon = Icons.delete;
+      trailingIconAction = () {
+        deleteOrder(orderRef);
+      };
+    } else {
+      // Invalid order status
+      trailingIcon = Icons.error;
+      trailingIconAction = () {
+        // Handle the error or provide a fallback action
+      };
+    }
+
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Card(
@@ -165,15 +186,24 @@ class _HistoryPageState extends State<HistoryPage> {
             ],
           ),
           trailing: IconButton(
-            icon: const Icon(Icons.keyboard_return),
-            onPressed: () {
-              deleteOrder(orderRef);
-            },
+            icon: Icon(trailingIcon),
+            onPressed: trailingIconAction,
           ),
         ),
       ),
     );
   }
+
+  void changeOrderStatus(DocumentReference orderRef) async {
+  try {
+    await orderRef.update({'orderStatus': 'complete'});
+    print('Order status changed to complete');
+    getOrderRefs(); // Update the order references to refresh the list
+  } catch (error) {
+    print('Failed to change order status: $error');
+    // Show an error message or any other indication of failure
+  }
+}
 
   void deleteOrder(DocumentReference orderRef) {
     orderRef.delete().then((value) {
