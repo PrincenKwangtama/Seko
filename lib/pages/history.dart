@@ -155,7 +155,7 @@ class _HistoryPageState extends State<HistoryPage> {
     } else if (orderStatus == 'complete') {
       trailingIcon = Icons.delete;
       trailingIconAction = () {
-        deleteOrder(orderRef);
+        deleteOrder(context, orderRef);
       };
     } else {
       // Invalid order status
@@ -195,23 +195,51 @@ class _HistoryPageState extends State<HistoryPage> {
   }
 
   void changeOrderStatus(DocumentReference orderRef) async {
-  try {
-    await orderRef.update({'orderStatus': 'complete'});
-    print('Order status changed to complete');
-    getOrderRefs(); // Update the order references to refresh the list
-  } catch (error) {
-    print('Failed to change order status: $error');
-    // Show an error message or any other indication of failure
+    try {
+      await orderRef.update({'orderStatus': 'complete'});
+      print('Order status changed to complete');
+      getOrderRefs(); // Update the order references to refresh the list
+    } catch (error) {
+      print('Failed to change order status: $error');
+      // Show an error message or any other indication of failure
+    }
   }
-}
 
-  void deleteOrder(DocumentReference orderRef) {
-    orderRef.delete().then((value) {
+  void deleteOrder(BuildContext context, DocumentReference orderRef) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Confirmation'),
+          content: Text('Are you sure you want to delete this order?'),
+          actions: [
+            TextButton(
+              child: Text('No'),
+              onPressed: () {
+                Navigator.of(context).pop(); // Close the dialog
+              },
+            ),
+            TextButton(
+              child: Text('Yes'),
+              onPressed: () {
+                confirmDeleteOrder(orderRef);
+                Navigator.of(context).pop(); // Close the dialog
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  void confirmDeleteOrder(DocumentReference orderRef) async {
+    try {
+      await orderRef.delete();
       print('Order deleted successfully');
-      // Show a snackbar or any other indication of successful deletion
-    }).catchError((error) {
+      getOrderRefs(); // Update the order references to refresh the list
+    } catch (error) {
       print('Failed to delete order: $error');
       // Show an error message or any other indication of failure
-    });
+    }
   }
 }
