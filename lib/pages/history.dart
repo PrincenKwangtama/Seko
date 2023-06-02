@@ -6,6 +6,8 @@ import 'package:car_rental/pages/home_page.dart';
 import 'package:get/get.dart';
 
 class HistoryPage extends StatefulWidget {
+  const HistoryPage({Key? key}) : super(key: key);
+
   @override
   _HistoryPageState createState() => _HistoryPageState();
 }
@@ -64,8 +66,8 @@ class _HistoryPageState extends State<HistoryPage> {
       body: Column(
         children: [
           if (ongoingOrderRefs.isNotEmpty)
-            Padding(
-              padding: const EdgeInsets.all(8.0),
+            const Padding(
+              padding: EdgeInsets.all(8.0),
               child: Text(
                 'Ongoing Orders',
                 style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
@@ -98,8 +100,8 @@ class _HistoryPageState extends State<HistoryPage> {
           if (completeOrderRefs.isNotEmpty)
             const SizedBox(height: 16), // Add some spacing between the sections
           if (completeOrderRefs.isNotEmpty)
-            Padding(
-              padding: const EdgeInsets.all(8.0),
+            const Padding(
+              padding: EdgeInsets.all(8.0),
               child: Text(
                 'Complete Orders',
                 style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
@@ -210,17 +212,17 @@ class _HistoryPageState extends State<HistoryPage> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text('Confirmation'),
-          content: Text('Are you sure you want to delete this order?'),
+          title: const Text('Confirmation'),
+          content: const Text('Are you sure you want to delete this order?'),
           actions: [
             TextButton(
-              child: Text('No'),
+              child: const Text('No'),
               onPressed: () {
                 Navigator.of(context).pop(); // Close the dialog
               },
             ),
             TextButton(
-              child: Text('Yes'),
+              child: const Text('Yes'),
               onPressed: () {
                 confirmDeleteOrder(orderRef);
                 Navigator.of(context).pop(); // Close the dialog
