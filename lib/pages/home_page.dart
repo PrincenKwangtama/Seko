@@ -1,3 +1,4 @@
+import 'package:car_rental/widgets/homePage/car_list_page.dart';
 import 'package:car_rental/widgets/bottom_nav_bar.dart';
 import 'package:car_rental/widgets/homePage/most_rented.dart';
 import 'package:car_rental/widgets/homePage/top_brands.dart';
@@ -14,23 +15,23 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   static const Color warnaUtama = Color.fromARGB(255, 35, 34, 34);
+  TextEditingController searchController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size; //check the size of device
+    Size size = MediaQuery.of(context).size;
     var brightness = MediaQuery.of(context).platformBrightness;
-    bool isDarkMode = brightness ==
-        Brightness.light; //check if device is in dark or light mode
+    bool isDarkMode = brightness == Brightness.light;
 
     return Scaffold(
       appBar: PreferredSize(
-        preferredSize: const Size.fromHeight(40.0), //appbar size
+        preferredSize: const Size.fromHeight(40.0),
         child: AppBar(
           bottomOpacity: 0.0,
           elevation: 0.0,
           shadowColor: Colors.transparent,
-          backgroundColor: isDarkMode
-              ? const Color(0xff06090d)
-              : const Color(0xfff8f8f8), //appbar bg color
+          backgroundColor:
+              isDarkMode ? const Color(0xff06090d) : const Color(0xfff8f8f8),
           leading: Padding(
             padding: EdgeInsets.only(
               left: size.width * 0.05,
@@ -40,9 +41,7 @@ class _HomePageState extends State<HomePage> {
               width: size.width * 0.1,
               child: Container(
                 decoration: BoxDecoration(
-                  color: isDarkMode
-                      ? const Color(0xff070606)
-                      : Colors.white, //icon bg color
+                  color: isDarkMode ? const Color(0xff070606) : Colors.white,
                   borderRadius: const BorderRadius.all(
                     Radius.circular(
                       10,
@@ -51,7 +50,7 @@ class _HomePageState extends State<HomePage> {
                 ),
                 child: Icon(
                   UniconsLine.bars,
-                  color: isDarkMode ? Colors.white : warnaUtama, //icon bg color
+                  color: isDarkMode ? Colors.white : warnaUtama,
                   size: size.height * 0.025,
                 ),
               ),
@@ -61,9 +60,7 @@ class _HomePageState extends State<HomePage> {
           titleSpacing: 0,
           leadingWidth: size.width * 0.15,
           title: Image.network(
-            isDarkMode
-                ? 'assets/images/seko.png'
-                : 'assets/images/seko.png', //logo
+            isDarkMode ? 'assets/images/seko.png' : 'assets/images/seko.png',
             height: size.height * 0.10,
             width: size.width * 0.45,
           ),
@@ -78,17 +75,20 @@ class _HomePageState extends State<HomePage> {
                 width: size.width * 0.1,
                 child: Container(
                   decoration: BoxDecoration(
-                    color: isDarkMode
-                        ? const Color(0xff070606)
-                        : Colors.white, //icon bg color
+                    color: isDarkMode ? const Color(0xff070606) : Colors.white,
                     borderRadius: const BorderRadius.all(
                       Radius.circular(10),
                     ),
                   ),
-                  child: Icon(
-                    UniconsLine.search,
-                    color: isDarkMode ? Colors.white : warnaUtama,
-                    size: size.height * 0.025,
+                  child: IconButton(
+                    icon: Icon(
+                      UniconsLine.search,
+                      color: isDarkMode ? Colors.white : warnaUtama,
+                      size: size.height * 0.025,
+                    ),
+                    onPressed: () {
+                      performSearch(searchController.text);
+                    },
                   ),
                 ),
               ),
@@ -104,9 +104,8 @@ class _HomePageState extends State<HomePage> {
           height: size.height,
           width: size.height,
           decoration: BoxDecoration(
-            color: isDarkMode
-                ? const Color(0xff06090d)
-                : const Color(0xfff8f8f8), //background color
+            color:
+                isDarkMode ? const Color(0xff06090d) : const Color(0xfff8f8f8),
           ),
           child: SafeArea(
             child: ListView(
@@ -122,9 +121,8 @@ class _HomePageState extends State<HomePage> {
                       borderRadius: const BorderRadius.all(
                         Radius.circular(15),
                       ),
-                      color: isDarkMode
-                          ? const Color(0xff070606)
-                          : Colors.white, //section bg color
+                      color:
+                          isDarkMode ? const Color(0xff070606) : Colors.white,
                     ),
                     child: Column(
                       children: [
@@ -171,7 +169,7 @@ class _HomePageState extends State<HomePage> {
                                 width: size.width * 0.65,
                                 height: size.height * 0.06,
                                 child: TextField(
-                                  //searchbar
+                                  controller: searchController,
                                   style: GoogleFonts.poppins(
                                     color: isDarkMode
                                         ? Colors.white
@@ -194,6 +192,9 @@ class _HomePageState extends State<HomePage> {
                                     ),
                                     hintText: 'Search a car',
                                   ),
+                                  onEditingComplete: () {
+                                    performSearch(searchController.text);
+                                  },
                                 ),
                               ),
                               Padding(
@@ -209,12 +210,17 @@ class _HomePageState extends State<HomePage> {
                                         10,
                                       ),
                                     ),
-                                    color: warnaUtama, //filters bg color
+                                    color: warnaUtama,
                                   ),
-                                  child: Icon(
-                                    UniconsLine.sliders_v,
-                                    color: Colors.white,
-                                    size: size.height * 0.032,
+                                  child: IconButton(
+                                    icon: Icon(
+                                      UniconsLine.search,
+                                      color: Colors.white,
+                                      size: size.height * 0.032,
+                                    ),
+                                    onPressed: () {
+                                      performSearch(searchController.text);
+                                    },
                                   ),
                                 ),
                               ),
@@ -231,6 +237,16 @@ class _HomePageState extends State<HomePage> {
             ),
           ),
         ),
+      ),
+    );
+  }
+
+  void performSearch(String searchQuery) {
+    // Perform search here
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => CarListPage(searchQuery: searchQuery),
       ),
     );
   }
