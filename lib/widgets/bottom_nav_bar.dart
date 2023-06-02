@@ -24,10 +24,10 @@ Widget buildBottomNavBar(int currIndex, Size size, bool isDarkMode) {
           Get.off(const HomePage());
         }
         if (value == 1) {
-          Get.off( ChatListPage());
+          Get.off( const ChatListPage());
         }
         if (value == 2) {
-          Get.off( HistoryPage());
+          Get.off( const HistoryPage());
         }
         if (value == 3) {
           Get.off(const ProfilePage());

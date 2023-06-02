@@ -1,3 +1,4 @@
+import 'package:car_rental/pages/profile.dart';
 import 'package:car_rental/widgets/homePage/car_list_page.dart';
 import 'package:car_rental/widgets/bottom_nav_bar.dart';
 import 'package:car_rental/widgets/homePage/most_rented.dart';
@@ -5,6 +6,9 @@ import 'package:car_rental/widgets/homePage/top_brands.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:unicons/unicons.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:get/get.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -16,6 +20,15 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   static const Color warnaUtama = Color.fromARGB(255, 35, 34, 34);
   TextEditingController searchController = TextEditingController();
+  late FirebaseAuth _auth;
+  late User? _user;
+
+  @override
+  void initState() {
+    super.initState();
+    _auth = FirebaseAuth.instance;
+    _user = _auth.currentUser;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -80,14 +93,37 @@ class _HomePageState extends State<HomePage> {
                       Radius.circular(10),
                     ),
                   ),
-                  child: IconButton(
-                    icon: Icon(
-                      UniconsLine.search,
-                      color: isDarkMode ? Colors.white : warnaUtama,
-                      size: size.height * 0.025,
-                    ),
-                    onPressed: () {
-                      performSearch(searchController.text);
+                  child: StreamBuilder<DocumentSnapshot>(
+                    stream: FirebaseFirestore.instance.collection('users').doc(_user!.uid).snapshots(),
+                    builder: (context, snapshot) {
+                      if (!snapshot.hasData) {
+                        return const Center(
+                          child: CircularProgressIndicator(),
+                        );
+                      }
+
+                      final userDocument = snapshot.data!;
+                      final profilePicture = userDocument['profilePicture'];
+
+                      return MouseRegion(
+                        cursor: SystemMouseCursors.click,
+                        child: GestureDetector(
+                          onTap: () => Get.off(const ProfilePage()),
+                          child: Container(
+                            alignment: Alignment.topCenter,
+                            padding: const EdgeInsets.only(top: 10),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                CircleAvatar(
+                                  radius: 15,
+                                  backgroundImage: profilePicture != null ? NetworkImage(profilePicture) : null,
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      );
                     },
                   ),
                 ),

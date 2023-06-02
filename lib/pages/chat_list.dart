@@ -7,6 +7,8 @@ import 'package:get/get.dart';
 import 'package:car_rental/pages/home_page.dart';
 
 class ChatListPage extends StatefulWidget {
+  const ChatListPage({Key? key}) : super(key: key);
+
   @override
   _ChatListPageState createState() => _ChatListPageState();
 }

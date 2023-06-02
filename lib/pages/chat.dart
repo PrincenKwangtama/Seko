@@ -34,7 +34,7 @@ class _ChatPageState extends State<ChatPage> {
           leading: IconButton(
             icon: const Icon(Icons.arrow_back),
             onPressed: () {
-              Get.off( ChatListPage());
+              Get.off( const ChatListPage());
             },
           ),
           title: const Text(
