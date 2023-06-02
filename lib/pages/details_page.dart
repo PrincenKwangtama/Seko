@@ -313,7 +313,7 @@ class _DetailsPageState extends State<DetailsPage> {
                                           color: isDarkMode
                                               ? Colors.white.withOpacity(0.7)
                                               : Colors.black.withOpacity(0.7),
-                                          fontSize: size.width * 0.032,
+                                          fontSize: size.width * 0.020,
                                           fontWeight: FontWeight.bold,
                                         ),
                                       ),
