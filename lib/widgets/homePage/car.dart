@@ -105,7 +105,7 @@ Padding buildCar(int i, Size size, bool isDarkMode, data) {
                           color: isDarkMode
                               ? Colors.white
                               : const Color(0xff3b22a1),
-                          fontSize: size.width * 0.06,
+                          fontSize: size.width * 0.03,
                           fontWeight: FontWeight.bold,
                         ),
                       ),

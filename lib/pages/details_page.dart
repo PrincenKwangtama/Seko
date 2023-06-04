@@ -189,13 +189,13 @@ class _DetailsPageState extends State<DetailsPage> {
                               color: isDarkMode
                                   ? Colors.white
                                   : const Color(0xff3b22a1),
-                              fontSize: size.width * 0.05,
+                              fontSize: size.width * 0.04,
                               fontWeight: FontWeight.bold,
                             ),
                           ),
                           const Spacer(),
                           Text(
-                            '${widget.carPrice}\$',
+                            '/Rp.${widget.carPrice}',
                             style: GoogleFonts.poppins(
                               color: isDarkMode
                                   ? Colors.white
@@ -296,7 +296,7 @@ class _DetailsPageState extends State<DetailsPage> {
                                         size: size.height * 0.05,
                                       ),
                                       Text(
-                                        'Katowice Airport',
+                                        'Rungkut Harapan',
                                         textAlign: TextAlign.center,
                                         style: GoogleFonts.poppins(
                                           color: isDarkMode
@@ -307,7 +307,7 @@ class _DetailsPageState extends State<DetailsPage> {
                                         ),
                                       ),
                                       Text(
-                                        'Wolności 90, 42-625 Pyrzowice',
+                                        'Block G, No.32',
                                         textAlign: TextAlign.center,
                                         style: GoogleFonts.poppins(
                                           color: isDarkMode
@@ -320,22 +320,22 @@ class _DetailsPageState extends State<DetailsPage> {
                                     ],
                                   ),
                                 ),
-                                SizedBox(
-                                  height: size.height * 0.17,
-                                  width: size.width * 0.29,
-                                  child: GoogleMap(
-                                    mapType: MapType.hybrid,
-                                    onMapCreated: _onMapCreated,
-                                    initialCameraPosition: const CameraPosition(
-                                      target: _center,
-                                      zoom: 13.0,
-                                    ),
-                                    onTap: (latLng) => Get.to(const Maps()),
-                                    zoomControlsEnabled: false,
-                                    scrollGesturesEnabled: true,
-                                    zoomGesturesEnabled: true,
-                                  ),
-                                ),
+                                // SizedBox(
+                                //   height: size.height * 0.17,
+                                //   width: size.width * 0.29,
+                                //   child: GoogleMap(
+                                //     mapType: MapType.hybrid,
+                                //     onMapCreated: _onMapCreated,
+                                //     initialCameraPosition: const CameraPosition(
+                                //       target: _center,
+                                //       zoom: 13.0,
+                                //     ),
+                                //     onTap: (latLng) => Get.to(const Maps()),
+                                //     zoomControlsEnabled: false,
+                                //     scrollGesturesEnabled: true,
+                                //     zoomGesturesEnabled: true,
+                                //   ),
+                                // ),
                               ],
                             ),
                           ),

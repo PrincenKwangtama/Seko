@@ -181,7 +181,7 @@ class _HistoryPageState extends State<HistoryPage> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const SizedBox(height: 4),
-              Text('Total Price: \$${totalPrice.toString()}'),
+              Text('Total Price: Rp. ${totalPrice.toString()}'),
               Text('Start Date: ${startDate.toString()}'),
               Text('End Date: ${endDate.toString()}'),
               Text('Payment Option: $paymentOption'),

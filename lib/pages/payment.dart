@@ -114,7 +114,7 @@ class _PaymentPageState extends State<PaymentPage> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          'Car Price: \$${widget.carPrice}',
+                          'Car Price: Rp. ${widget.carPrice}',
                           style: const TextStyle(fontSize: 20),
                         ),
                         const SizedBox(height: 8),
@@ -157,7 +157,7 @@ class _PaymentPageState extends State<PaymentPage> {
                         ),
                         const SizedBox(height: 16),
                         Text(
-                          'Total Amount: \$$totalPrice',
+                          'Total Amount: Rp. $totalPrice',
                           style: const TextStyle(fontSize: 20),
                         ),
                         const SizedBox(height: 16),

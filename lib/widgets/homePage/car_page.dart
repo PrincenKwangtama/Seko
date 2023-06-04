@@ -140,10 +140,10 @@ class CarPage extends StatelessWidget {
                     Row(
                       children: [
                         Text(
-                          '${carData['carPrice']}\$',
+                          '${carData['carPrice']}',
                           style: GoogleFonts.poppins(
                             color: Colors.black,
-                            fontSize: 18,
+                            fontSize: 13,
                             fontWeight: FontWeight.bold,
                           ),
                         ),
