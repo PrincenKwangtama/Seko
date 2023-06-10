@@ -118,30 +118,72 @@ class _EditProfilePageState extends State<EditProfilePage> {
                       profilePicture != null ? NetworkImage(profilePicture) : null,
                 ),
                 const SizedBox(height: 16),
-                TextField(
-                  controller: _nameController,
-                  decoration: const InputDecoration(
-                    labelText: 'Name',
-                    hintText: 'Enter your name',
-                    filled: true,
+                Padding(
+                  padding: EdgeInsets.only(left: screenWidth * 0.05, right: screenWidth * 0.05),
+                  child: Container(
+                    width: screenWidth * 0.9,
+                    height: 60,
+                    decoration: const BoxDecoration(
+                      color: Color(0xffF7F8F8),
+                      borderRadius: BorderRadius.all(
+                        Radius.circular(15),
+                      ),
+                    ),
+                    child: TextField(
+                      controller: _nameController,
+                      decoration: const InputDecoration(
+                        labelText: 'Name',
+                        hintText: 'Enter your name',
+                        border: InputBorder.none,
+                        contentPadding: EdgeInsets.symmetric(horizontal: 16),
+                      ),
+                    ),
                   ),
                 ),
                 const SizedBox(height: 8),
-                TextField(
-                  controller: _emailController,
-                  decoration: const InputDecoration(
-                    labelText: 'Email',
-                    hintText: 'Enter your email',
-                    filled: true,
+                Padding(
+                  padding: EdgeInsets.only(left: screenWidth * 0.05, right: screenWidth * 0.05),
+                  child: Container(
+                    width: screenWidth * 0.9,
+                    height: 60,
+                    decoration: const BoxDecoration(
+                      color:  Color(0xffF7F8F8),
+                      borderRadius: BorderRadius.all(
+                        Radius.circular(15),
+                      ),
+                    ),
+                    child: TextField(
+                      controller: _emailController,
+                      decoration: const InputDecoration(
+                        labelText: 'Email',
+                        hintText: 'Enter your email',
+                        border: InputBorder.none,
+                        contentPadding: EdgeInsets.symmetric(horizontal: 16),
+                      ),
+                    ),
                   ),
                 ),
                 const SizedBox(height: 8),
-                TextField(
-                  controller: _phoneNumberController,
-                  decoration: const InputDecoration(
-                    labelText: 'Phone Number',
-                    hintText: 'Enter your phone number',
-                    filled: true,
+                Padding(
+                  padding: EdgeInsets.only(left: screenWidth * 0.05, right: screenWidth * 0.05),
+                  child: Container(
+                    width: screenWidth * 0.9,
+                    height: 60,
+                    decoration: const BoxDecoration(
+                      color:  Color(0xffF7F8F8),
+                      borderRadius: BorderRadius.all(
+                        Radius.circular(15),
+                      ),
+                    ),
+                    child: TextField(
+                      controller: _phoneNumberController,
+                      decoration: const InputDecoration(
+                        labelText: 'Phone Number',
+                        hintText: 'Enter your phone number',
+                        border: InputBorder.none,
+                        contentPadding: EdgeInsets.symmetric(horizontal: 16),
+                      ),
+                    ),
                   ),
                 ),
                 const SizedBox(height: 8),

@@ -46,38 +46,75 @@ class _ChatListPageState extends State<ChatListPage> {
 
             final users = snapshot.data!.docs;
 
-            return ListView.builder(
-              itemCount: users.length,
-              itemBuilder: (context, index) {
-                final userData = users[index].data() as Map<String, dynamic>;
-                final userId = users[index].id;
-                final userName = userData['name'];
-                final userProfilePicture = userData['profilePicture'];
-                final userStatus = userData['status'];
+            List<Widget> userTiles = [];
+            List<Widget> driverTiles = [];
 
-                if (userId != user.uid) {
-                  return ListTile(
-                    leading: CircleAvatar(
-                      backgroundImage: NetworkImage(userProfilePicture),
-                    ),
-                    title: Text(userName),
-                    subtitle: Text('($userStatus)'),
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => ChatPage(
-                            currentUserId: user.uid,
-                            anotherUserId: userId,
-                          ),
+            for (var userDoc in users) {
+              final userData = userDoc.data() as Map<String, dynamic>;
+              final userId = userDoc.id;
+              final userName = userData['name'];
+              final userProfilePicture = userData['profilePicture'];
+              final userStatus = userData['status'];
+
+              if (userId != user.uid) {
+                final chatTile = ListTile(
+                  leading: CircleAvatar(
+                    backgroundImage: NetworkImage(userProfilePicture),
+                  ),
+                  title: Text(userName),
+                  subtitle: Text('($userStatus)'),
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => ChatPage(
+                          currentUserId: user.uid,
+                          anotherUserId: userId,
                         ),
-                      );
-                    },
-                  );
-                } else {
-                  return Container(); // Exclude the current user from the chat list
+                      ),
+                    );
+                  },
+                );
+
+                if (userStatus == 'user') {
+                  userTiles.add(chatTile);
+                } else if (userStatus == 'driver') {
+                  driverTiles.add(chatTile);
                 }
-              },
+              }
+            }
+
+            return ListView(
+              children: [
+                if (userTiles.isNotEmpty)
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const Padding(
+                        padding: EdgeInsets.all(8.0),
+                        child: Text(
+                          'Users',
+                          style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
+                        ),
+                      ),
+                      ...userTiles,
+                    ],
+                  ),
+                if (driverTiles.isNotEmpty)
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const Padding(
+                        padding: EdgeInsets.all(8.0),
+                        child: Text(
+                          'Drivers',
+                          style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
+                        ),
+                      ),
+                      ...driverTiles,
+                    ],
+                  ),
+              ],
             );
           },
         ),

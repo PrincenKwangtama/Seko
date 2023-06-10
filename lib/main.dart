@@ -31,7 +31,7 @@ class MyApp extends StatelessWidget {
         defaultTransition: Transition.rightToLeft,
         transitionDuration: Duration(milliseconds: 500),
         debugShowCheckedModeBanner: false,
-        title: 'Car Rental App',
+        title: 'SeKO Rental App',
         home: Wrapper(),
       ),
     );
