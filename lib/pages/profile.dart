@@ -36,21 +36,22 @@ class _ProfilePageState extends State<ProfilePage> {
     Get.offAll(const NotifPage());
   }
 
-void _logout() async {
-  FirebaseAuth.instance.signOut();
-  Get.offAll(const Wrapper());
-}
+  void _logout() async {
+    FirebaseAuth.instance.signOut();
+    Get.offAll(const Wrapper());
+  }
 
   @override
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
+    Size size = MediaQuery.of(context).size;
 
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
           onPressed: () {
-            Get.offAll(const HomePage ());
+            Get.offAll(const HomePage());
           },
         ),
         title: const Text(
@@ -76,63 +77,66 @@ void _logout() async {
           final status = userDocument['status'];
           final profilePicture = userDocument['profilePicture'];
 
-          return Container(
-            alignment: Alignment.topCenter, // Align the content to the top center
-            padding: const EdgeInsets.only(top: 20), // Add top padding for spacing
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start, // Align the content from top to bottom
-              children: [
-                CircleAvatar(
-                  radius: 50,
-                  backgroundImage: profilePicture != null ? NetworkImage(profilePicture) : null,
-                ),
-                const SizedBox(height: 16),
-                Text(
-                  'Name: ${name ?? 'N/A'}',
-                  style: const TextStyle(fontSize: 18),
-                ),
-                const SizedBox(height: 8),
-                Text(
-                  'Email: ${email ?? 'N/A'}',
-                  style: const TextStyle(fontSize: 18),
-                ),
-                const SizedBox(height: 8),
-                Text(
-                  'Phone Number: ${phoneNumber ?? 'N/A'}',
-                  style: const TextStyle(fontSize: 18),
-                ),
-                Text(
-                  'User Status: ${status ?? 'N/A'}',
-                  style: const TextStyle(fontSize: 18),
-                ),
-                const SizedBox(height: 16),
-                SizedBox(
-                  width: screenWidth * 0.5, // Cover half of the screen width
-                  height: 60,
-                  child: ElevatedButton(
-                    onPressed: _editProfile,
-                    child: const Text('Edit Profile'),
+          return Center(
+            child: Padding(
+              padding: const EdgeInsets.only(top: 20.0),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  CircleAvatar(
+                    radius: 60,
+                    backgroundImage: profilePicture != null ? NetworkImage(profilePicture) : null,
                   ),
-                ),
-                const SizedBox(height: 8),
-                SizedBox(
-                  width: screenWidth * 0.5, // Cover half of the screen width
-                  height: 60,
-                  child: ElevatedButton(
-                    onPressed: _goToNotifications,
-                    child: const Text('Notifications'),
+                  SizedBox(height: size.height * 0.03),
+                  Text(
+                    'Name: ${name ?? 'N/A'}',
+                    style: const TextStyle(fontSize: 18),
                   ),
-                ),
-                const SizedBox(height: 8),
-                SizedBox(
-                  width: screenWidth * 0.5, // Cover half of the screen width
-                  height: 60,
-                  child: ElevatedButton(
-                    onPressed: _logout,
-                    child: const Text('Logout'),
+                  SizedBox(height: size.height * 0.01),
+                  Text(
+                    'Email: ${email ?? 'N/A'}',
+                    style: const TextStyle(fontSize: 18),
                   ),
-                ),
-              ],
+                  SizedBox(height: size.height * 0.01),
+                  Text(
+                    'Phone Number: ${phoneNumber ?? 'N/A'}',
+                    style: const TextStyle(fontSize: 18),
+                  ),
+                  SizedBox(height: size.height * 0.01),
+                  Text(
+                    'User Status: ${status ?? 'N/A'}',
+                    style: const TextStyle(fontSize: 18),
+                  ),
+                  SizedBox(height: size.height * 0.03),
+                  SizedBox(
+                    width: screenWidth * 0.5,
+                    height: 60,
+                    child: ElevatedButton(
+                      onPressed: _editProfile,
+                      child: const Text('Edit Profile'),
+                    ),
+                  ),
+                  SizedBox(height: 8),
+                  SizedBox(
+                    width: screenWidth * 0.5,
+                    height: 60,
+                    child: ElevatedButton(
+                      onPressed: _goToNotifications,
+                      child: const Text('Notifications'),
+                    ),
+                  ),
+                  SizedBox(height: 8),
+                  SizedBox(
+                    width: screenWidth * 0.5,
+                    height: 60,
+                    child: ElevatedButton(
+                      onPressed: _logout,
+                      child: const Text('Logout'),
+                    ),
+                  ),
+                ],
+              ),
             ),
           );
         },

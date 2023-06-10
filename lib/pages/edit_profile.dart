@@ -109,133 +109,155 @@ class _EditProfilePageState extends State<EditProfilePage> {
           return Container(
             alignment: Alignment.topCenter,
             padding: const EdgeInsets.only(top: 20),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                CircleAvatar(
-                  radius: 50,
-                  backgroundImage:
-                      profilePicture != null ? NetworkImage(profilePicture) : null,
-                ),
-                const SizedBox(height: 16),
-                Padding(
-                  padding: EdgeInsets.only(left: screenWidth * 0.05, right: screenWidth * 0.05),
-                  child: Container(
-                    width: screenWidth * 0.9,
-                    height: 60,
-                    decoration: const BoxDecoration(
-                      color: Color(0xffF7F8F8),
-                      borderRadius: BorderRadius.all(
-                        Radius.circular(15),
-                      ),
-                    ),
-                    child: TextField(
-                      controller: _nameController,
-                      decoration: const InputDecoration(
-                        labelText: 'Name',
-                        hintText: 'Enter your name',
-                        border: InputBorder.none,
-                        contentPadding: EdgeInsets.symmetric(horizontal: 16),
-                      ),
-                    ),
+            child: SingleChildScrollView(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  CircleAvatar(
+                    radius: 50,
+                    backgroundImage:
+                        profilePicture != null ? NetworkImage(profilePicture) : null,
                   ),
-                ),
-                const SizedBox(height: 8),
-                Padding(
-                  padding: EdgeInsets.only(left: screenWidth * 0.05, right: screenWidth * 0.05),
-                  child: Container(
-                    width: screenWidth * 0.9,
-                    height: 60,
-                    decoration: const BoxDecoration(
-                      color:  Color(0xffF7F8F8),
-                      borderRadius: BorderRadius.all(
-                        Radius.circular(15),
+                  const SizedBox(height: 16),
+                  Padding(
+                    padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.05),
+                    child: Container(
+                      width: screenWidth * 0.9,
+                      height: 60,
+                      decoration: const BoxDecoration(
+                        color: Color(0xffF7F8F8),
+                        borderRadius: BorderRadius.all(
+                          Radius.circular(15),
+                        ),
                       ),
-                    ),
-                    child: TextField(
-                      controller: _emailController,
-                      decoration: const InputDecoration(
-                        labelText: 'Email',
-                        hintText: 'Enter your email',
-                        border: InputBorder.none,
-                        contentPadding: EdgeInsets.symmetric(horizontal: 16),
-                      ),
-                    ),
-                  ),
-                ),
-                const SizedBox(height: 8),
-                Padding(
-                  padding: EdgeInsets.only(left: screenWidth * 0.05, right: screenWidth * 0.05),
-                  child: Container(
-                    width: screenWidth * 0.9,
-                    height: 60,
-                    decoration: const BoxDecoration(
-                      color:  Color(0xffF7F8F8),
-                      borderRadius: BorderRadius.all(
-                        Radius.circular(15),
-                      ),
-                    ),
-                    child: TextField(
-                      controller: _phoneNumberController,
-                      decoration: const InputDecoration(
-                        labelText: 'Phone Number',
-                        hintText: 'Enter your phone number',
-                        border: InputBorder.none,
-                        contentPadding: EdgeInsets.symmetric(horizontal: 16),
-                      ),
-                    ),
-                  ),
-                ),
-                const SizedBox(height: 8),
-                const Text(
-                  'Current User Status',
-                  style: TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                Row(
-                  children: [
-                    Expanded(
-                      child: ListTile(
-                        title: const Text('User'),
-                        leading: Radio<UserStatus>(
-                          value: UserStatus.user,
-                          groupValue: _selectedStatus,
-                          onChanged: (UserStatus? value) {
-                            setState(() {
-                              _selectedStatus = value!;
-                            });
-                          },
+                      child: TextField(
+                        controller: _nameController,
+                        decoration: const InputDecoration(
+                          labelText: 'Name',
+                          hintText: 'Enter your name',
+                          border: InputBorder.none,
+                          contentPadding: EdgeInsets.symmetric(horizontal: 16),
                         ),
                       ),
                     ),
-                    Expanded(
-                      child: ListTile(
-                        title: const Text('Driver'),
-                        leading: Radio<UserStatus>(
-                          value: UserStatus.driver,
-                          groupValue: _selectedStatus,
-                          onChanged: (UserStatus? value) {
-                            setState(() {
-                              _selectedStatus = value!;
-                            });
-                          },
+                  ),
+                  const SizedBox(height: 8),
+                  Padding(
+                    padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.05),
+                    child: Container(
+                      width: screenWidth * 0.9,
+                      height: 60,
+                      decoration: const BoxDecoration(
+                        color: Color(0xffF7F8F8),
+                        borderRadius: BorderRadius.all(
+                          Radius.circular(15),
+                        ),
+                      ),
+                      child: TextField(
+                        controller: _emailController,
+                        decoration: const InputDecoration(
+                          labelText: 'Email',
+                          hintText: 'Enter your email',
+                          border: InputBorder.none,
+                          contentPadding: EdgeInsets.symmetric(horizontal: 16),
                         ),
                       ),
                     ),
-                  ],
-                ),
-                const SizedBox(height: 16),
-                SizedBox(
-                  width: screenWidth * 0.5,
-                  height: 60,
-                  child: ElevatedButton(
-                    onPressed: _saveProfileChanges,
-                    child: const Text('Save Changes'),
                   ),
-                ),
-              ],
+                  const SizedBox(height: 8),
+                  Padding(
+                    padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.05),
+                    child: Container(
+                      width: screenWidth * 0.9,
+                      height: 60,
+                      decoration: const BoxDecoration(
+                        color: Color(0xffF7F8F8),
+                        borderRadius: BorderRadius.all(
+                          Radius.circular(15),
+                        ),
+                      ),
+                      child: TextField(
+                        controller: _phoneNumberController,
+                        decoration: const InputDecoration(
+                          labelText: 'Phone Number',
+                          hintText: 'Enter your phone number',
+                          border: InputBorder.none,
+                          contentPadding: EdgeInsets.symmetric(horizontal: 16),
+                        ),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 8),
+                  Padding(
+                    padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.05),
+                    child: Container(
+                      width: screenWidth * 0.9,
+                      height: 70,
+                      decoration: const BoxDecoration(
+                        color: Color(0xffF7F8F8),
+                        borderRadius: BorderRadius.all(
+                          Radius.circular(15),
+                        ),
+                      ),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const Padding(
+                            padding: EdgeInsets.only(left: 16),
+                            child: Text(
+                              'Current User Status',
+                              style: TextStyle(
+                                fontSize: 13,
+                              ),
+                            ),
+                          ),
+                          Row(
+                            children: [
+                              Expanded(
+                                child: ListTile(
+                                  title: const Text('User'),
+                                  leading: Radio<UserStatus>(
+                                    value: UserStatus.user,
+                                    groupValue: _selectedStatus,
+                                    onChanged: (UserStatus? value) {
+                                      setState(() {
+                                        _selectedStatus = value!;
+                                      });
+                                    },
+                                  ),
+                                ),
+                              ),
+                              Expanded(
+                                child: ListTile(
+                                  title: const Text('Driver'),
+                                  leading: Radio<UserStatus>(
+                                    value: UserStatus.driver,
+                                    groupValue: _selectedStatus,
+                                    onChanged: (UserStatus? value) {
+                                      setState(() {
+                                        _selectedStatus = value!;
+                                      });
+                                    },
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 16),
+                  SizedBox(
+                    width: screenWidth * 0.5,
+                    height: 60,
+                    child: ElevatedButton(
+                      onPressed: _saveProfileChanges,
+                      child: const Text('Save Changes'),
+                    ),
+                  ),
+                ],
+              ),
             ),
           );
         },
