@@ -108,31 +108,109 @@ class _ProfilePageState extends State<ProfilePage> {
                     'User Status: ${status ?? 'N/A'}',
                     style: const TextStyle(fontSize: 18),
                   ),
-                  SizedBox(height: size.height * 0.03),
+                  SizedBox(height: size.height * 0.02),
                   SizedBox(
                     width: screenWidth * 0.5,
                     height: 60,
-                    child: ElevatedButton(
-                      onPressed: _editProfile,
-                      child: const Text('Edit Profile'),
+                    child: MouseRegion(
+                      cursor: SystemMouseCursors.click,
+                      child: GestureDetector(
+                        onTap: _editProfile,
+                        child: Container(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10),
+                            gradient: const LinearGradient(
+                              stops: [
+                                0.4,
+                                2,
+                              ],
+                              begin: Alignment.centerRight,
+                              end: Alignment.centerLeft,
+                              colors: [Color.fromARGB(255, 255, 203, 47),Color.fromARGB(255, 255, 203, 47)], // Replace with your desired colors
+                            ),
+                          ),
+                          child: Align(
+                            child: Text(
+                              'Edit Profile',
+                              style: TextStyle(
+                                fontSize: size.height * 0.025,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.white, // Customize text color if needed
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
                     ),
                   ),
-                  SizedBox(height: 8),
+                  SizedBox(height: size.height * 0.01),
                   SizedBox(
                     width: screenWidth * 0.5,
                     height: 60,
-                    child: ElevatedButton(
-                      onPressed: _goToNotifications,
-                      child: const Text('Notifications'),
+                    child: MouseRegion(
+                      cursor: SystemMouseCursors.click,
+                      child: GestureDetector(
+                        onTap: _goToNotifications,
+                        child: Container(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10),
+                            gradient: const LinearGradient(
+                              stops: [
+                                0.4,
+                                2,
+                              ],
+                              begin: Alignment.centerRight,
+                              end: Alignment.centerLeft,
+                              colors: [Color.fromARGB(255, 255, 203, 47),Color.fromARGB(255, 255, 203, 47)], // Replace with your desired colors
+                            ),
+                          ),
+                          child: Align(
+                            child: Text(
+                              'Notifications',
+                              style: TextStyle(
+                                fontSize: size.height * 0.025,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.white, // Customize text color if needed
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
                     ),
                   ),
-                  SizedBox(height: 8),
+                  SizedBox(height: size.height * 0.01),
                   SizedBox(
                     width: screenWidth * 0.5,
                     height: 60,
-                    child: ElevatedButton(
-                      onPressed: _logout,
-                      child: const Text('Logout'),
+                    child: MouseRegion(
+                      cursor: SystemMouseCursors.click,
+                      child: GestureDetector(
+                        onTap: _logout,
+                        child: Container(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10),
+                            gradient: const LinearGradient(
+                              stops: [
+                                0.4,
+                                2,
+                              ],
+                              begin: Alignment.centerRight,
+                              end: Alignment.centerLeft,
+                              colors: [Color.fromARGB(255, 255, 203, 47),Color.fromARGB(255, 255, 203, 47)], // Replace with your desired colors
+                            ),
+                          ),
+                          child: Align(
+                            child: Text(
+                              'Logout',
+                              style: TextStyle(
+                                fontSize: size.height * 0.025,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.white, // Customize text color if needed
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
                     ),
                   ),
                 ],

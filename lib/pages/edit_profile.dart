@@ -77,6 +77,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
   @override
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
+    Size size = MediaQuery.of(context).size;
 
     return Scaffold(
       appBar: AppBar(
@@ -251,9 +252,35 @@ class _EditProfilePageState extends State<EditProfilePage> {
                   SizedBox(
                     width: screenWidth * 0.5,
                     height: 60,
-                    child: ElevatedButton(
-                      onPressed: _saveProfileChanges,
-                      child: const Text('Save Changes'),
+                    child: MouseRegion(
+                      cursor: SystemMouseCursors.click,
+                      child: GestureDetector(
+                        onTap: _saveProfileChanges,
+                        child: Container(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10),
+                            gradient: const LinearGradient(
+                              stops: [
+                                0.4,
+                                2,
+                              ],
+                              begin: Alignment.centerRight,
+                              end: Alignment.centerLeft,
+                              colors: [Color.fromARGB(255, 255, 203, 47),Color.fromARGB(255, 255, 203, 47)], // Replace with your desired colors
+                            ),
+                          ),
+                          child: Align(
+                            child: Text(
+                              'Save Changes',
+                              style: TextStyle(
+                                fontSize: size.height * 0.025,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.white, // Customize text color if needed
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
                     ),
                   ),
                 ],
