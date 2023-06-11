@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:car_rental/widgets/bottom_nav_bar.dart';
 import 'package:car_rental/pages/home_page.dart';
+import 'package:car_rental/pages/history.dart';
 
 class PaymentPage extends StatefulWidget {
   final int carPrice;
@@ -62,11 +63,41 @@ class _PaymentPageState extends State<PaymentPage> {
     FirebaseFirestore.instance.collection('order').doc(orderId).set(orderData);
   }
 
+  void _showPaymentConfirmationDialog() {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Payment Confirmation'),
+          content: const Text('Are you sure you want to proceed with the payment?'),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop(); // Close the dialog
+                addOrderToFirestore();
+                Get.offAll(const HistoryPage());
+              },
+              child: const Text('Yes'),
+            ),
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop(); // Close the dialog
+              },
+              child: const Text('No'),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     int totalPrice = carDayRent * widget.carPrice;
     DateTime currentDate = DateTime.now();
     DateTime endDate = currentDate.add(Duration(days: carDayRent));
+    double screenWidth = MediaQuery.of(context).size.width;
+    Size size = MediaQuery.of(context).size;
 
     return Scaffold(
       appBar: AppBar(
@@ -115,7 +146,7 @@ class _PaymentPageState extends State<PaymentPage> {
                       children: [
                         Text(
                           'Car Price: Rp. ${widget.carPrice}',
-                          style: const TextStyle(fontSize: 20),
+                          style: const TextStyle(fontSize: 16),
                         ),
                         const SizedBox(height: 8),
                         Row(
@@ -123,7 +154,7 @@ class _PaymentPageState extends State<PaymentPage> {
                           children: [
                             const Text(
                               'Days of Rent',
-                              style: TextStyle(fontSize: 20),
+                              style: TextStyle(fontSize: 16),
                             ),
                             Row(
                               children: [
@@ -140,7 +171,7 @@ class _PaymentPageState extends State<PaymentPage> {
                                 ),
                                 Text(
                                   carDayRent.toString(),
-                                  style: const TextStyle(fontSize: 20),
+                                  style: const TextStyle(fontSize: 16),
                                 ),
                                 IconButton(
                                   onPressed: () {
@@ -158,7 +189,7 @@ class _PaymentPageState extends State<PaymentPage> {
                         const SizedBox(height: 16),
                         Text(
                           'Total Amount: Rp. $totalPrice',
-                          style: const TextStyle(fontSize: 20),
+                          style: const TextStyle(fontSize: 16),
                         ),
                         const SizedBox(height: 16),
                         Text(
@@ -237,31 +268,45 @@ class _PaymentPageState extends State<PaymentPage> {
                             ),
                           ],
                         ),
-                        const SizedBox(height: 16),
-                        ElevatedButton(
-                          onPressed: () {
-                            // Add your payment logic here
-                            // This is just a placeholder for demonstration purposes
-                            showDialog(
-                              context: context,
-                              builder: (BuildContext context) {
-                                return AlertDialog(
-                                  title: const Text('Payment Successful'),
-                                  content: const Text('Thank you for your payment!'),
-                                  actions: [
-                                    ElevatedButton(
-                                      onPressed: () {
-                                        Navigator.of(context).pop();
-                                        addOrderToFirestore(); // Insert order data into Firestore
-                                      },
-                                      child: const Text('OK'),
+                        Align(
+                          alignment: Alignment.bottomCenter,
+                          child: Transform.translate(
+                            offset: const Offset(0, 20), // Adjust the vertical offset as needed
+                            child: SizedBox(
+                              width: screenWidth * 0.5,
+                              height: 45,
+                              child: MouseRegion(
+                                cursor: SystemMouseCursors.click,
+                                child: GestureDetector(
+                                  onTap: _showPaymentConfirmationDialog,
+                                  child: Container(
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(10),
+                                      gradient: const LinearGradient(
+                                        stops: [0.4, 2],
+                                        begin: Alignment.centerRight,
+                                        end: Alignment.centerLeft,
+                                        colors: [
+                                          Color.fromARGB(255, 255, 203, 47),
+                                          Color.fromARGB(255, 255, 203, 47)
+                                        ],
+                                      ),
                                     ),
-                                  ],
-                                );
-                              },
-                            );
-                          },
-                          child: const Text('Make Payment'),
+                                    child: Align(
+                                      child: Text(
+                                        'Make Payment',
+                                        style: TextStyle(
+                                          fontSize: size.height * 0.020,
+                                          fontWeight: FontWeight.bold,
+                                          color: Colors.white,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
                         ),
                       ],
                     ),

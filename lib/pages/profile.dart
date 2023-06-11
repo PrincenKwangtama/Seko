@@ -90,22 +90,22 @@ class _ProfilePageState extends State<ProfilePage> {
                   ),
                   SizedBox(height: size.height * 0.03),
                   Text(
-                    'Name: ${name ?? 'N/A'}',
+                    '${name ?? 'N/A'}',
                     style: const TextStyle(fontSize: 18),
                   ),
                   SizedBox(height: size.height * 0.01),
                   Text(
-                    'Email: ${email ?? 'N/A'}',
+                    '${email ?? 'N/A'}',
                     style: const TextStyle(fontSize: 18),
                   ),
                   SizedBox(height: size.height * 0.01),
                   Text(
-                    'Phone Number: ${phoneNumber ?? 'N/A'}',
+                    '${phoneNumber ?? 'N/A'}',
                     style: const TextStyle(fontSize: 18),
                   ),
                   SizedBox(height: size.height * 0.01),
                   Text(
-                    'User Status: ${status ?? 'N/A'}',
+                    'Status: ${status ?? 'N/A'}',
                     style: const TextStyle(fontSize: 18),
                   ),
                   SizedBox(height: size.height * 0.02),

@@ -89,7 +89,7 @@ class _ChatPageState extends State<ChatPage> {
                               padding: const EdgeInsets.symmetric(vertical: 4.0, horizontal: 8.0),
                               margin: const EdgeInsets.symmetric(vertical: 4.0, horizontal: 8.0),
                               decoration: BoxDecoration(
-                                color: isCurrentUserMessage ? Colors.blue : Colors.grey,
+                                color: isCurrentUserMessage ? Colors.blue : Colors.blueGrey,
                                 borderRadius: BorderRadius.circular(8.0),
                               ),
                               child: Column(

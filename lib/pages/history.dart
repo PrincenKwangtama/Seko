@@ -20,12 +20,36 @@ class _HistoryPageState extends State<HistoryPage> {
   @override
   void initState() {
     super.initState();
-    userId = FirebaseAuth.instance.currentUser!.uid;
+    isCurrentUserValid().then((isValid) {
+      if (isValid) {
+        userId = FirebaseAuth.instance.currentUser!.uid;
+        print('Current User ID: $userId');
 
-    print('Current User ID: $userId');
+        // Retrieve order references before entering StreamBuilder
+        getOrderRefs();
+      } else {
+        print('Current user ID is not valid');
+        // Handle the case where the user ID is not valid, such as showing an error message or redirecting to another page
+      }
+    });
+  }
 
-    // Retrieve order references before entering StreamBuilder
-    getOrderRefs();
+  Future<bool> isCurrentUserValid() async {
+    final currentUser = FirebaseAuth.instance.currentUser;
+    if (currentUser != null) {
+      final userId = currentUser.uid;
+      final userSnapshot = await FirebaseFirestore.instance
+          .collection('users')
+          .doc(userId)
+          .get();
+      final userData = userSnapshot.data();
+      if (userData != null) {
+        // User exists in the "users" collection
+        return true;
+      }
+    }
+    // User does not exist in the "users" collection
+    return false;
   }
 
   void getOrderRefs() async {
@@ -197,15 +221,39 @@ class _HistoryPageState extends State<HistoryPage> {
   }
 
   void changeOrderStatus(DocumentReference orderRef) async {
-    try {
-      await orderRef.update({'orderStatus': 'complete'});
-      print('Order status changed to complete');
-      getOrderRefs(); // Update the order references to refresh the list
-    } catch (error) {
-      print('Failed to change order status: $error');
-      // Show an error message or any other indication of failure
-    }
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Confirmation'),
+          content: const Text('Are you sure you want to complete this order?'),
+          actions: [
+            TextButton(
+              child: const Text('No'),
+              onPressed: () {
+                Navigator.of(context).pop(); // Close the dialog
+              },
+            ),
+            TextButton(
+              child: const Text('Yes'),
+              onPressed: () async {
+                Navigator.of(context).pop(); // Close the dialog
+                try {
+                  await orderRef.update({'orderStatus': 'complete'});
+                  print('Order status changed to complete');
+                  getOrderRefs(); // Update the order references to refresh the list
+                } catch (error) {
+                  print('Failed to change order status: $error');
+                  // Show an error message or any other indication of failure
+                }
+              },
+            ),
+          ],
+        );
+      },
+    );
   }
+
 
   void deleteOrder(BuildContext context, DocumentReference orderRef) {
     showDialog(
