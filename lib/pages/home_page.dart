@@ -226,7 +226,7 @@ class _HomePageState extends State<HomePage> {
                                           ? Colors.white
                                           : Colors.black,
                                     ),
-                                    hintText: 'Search a Vehicle',
+                                    hintText: 'Search a car',
                                   ),
                                   onEditingComplete: () {
                                     performSearch(searchController.text);
