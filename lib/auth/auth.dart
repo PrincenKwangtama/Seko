@@ -23,12 +23,14 @@ class _AuthPageState extends State<AuthPage> {
     "", //email
     "", //password
     "", //confirmPassword
+    "", //PhoneNumber
   ];
 
   final _firstnamekey = GlobalKey<FormState>();
   final _emailKey = GlobalKey<FormState>();
   final _passwordKey = GlobalKey<FormState>();
   final _confirmPasswordKey = GlobalKey<FormState>();
+  final _phonenumberKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -150,6 +152,30 @@ class _AuthPageState extends State<AuthPage> {
                           1,
                           isDarkMode,
                         ),
+                      ),
+                      Form(
+                        child: register
+                            ? buildTextField(
+                                "Phone Number",
+                                Icons.phone_outlined,
+                                false,
+                                size,
+                                  (valuephone) {
+                                    if (valuephone.length < 6) {
+                                      buildSnackError(
+                                        'Invalid Phone Number',
+                                        context,
+                                        size,
+                                      );
+                                      return '';
+                                    }
+                                    return null;
+                                  },
+                                  _phonenumberKey,
+                                  4,
+                                  isDarkMode,
+                              )
+                            : Container(),
                       ),
                       Form(
                         child: buildTextField(
@@ -306,6 +332,7 @@ class _AuthPageState extends State<AuthPage> {
                                             textfieldsStrings[1],
                                             textfieldsStrings[2],
                                             textfieldsStrings[0],
+                                            textfieldsStrings[4],
                                             context,
                                           );
                                         } on FirebaseAuthException catch (authEx) {

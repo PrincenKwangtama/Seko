@@ -39,6 +39,7 @@ class AuthenticationService extends ChangeNotifier {
     String email,
     String password,
     String name,
+    String phoneNumber,
     BuildContext buildContext,
   ) async {
     final credential = await _firebaseAuth.createUserWithEmailAndPassword(
@@ -53,7 +54,7 @@ class AuthenticationService extends ChangeNotifier {
         'id': user.uid,
         'name': name,
         'status': 'user',
-        'phoneNumber': '+621122223333',
+        'phoneNumber': '+$phoneNumber',
         'profilePicture': 'assets/images/profile.jpg',
       });
 
