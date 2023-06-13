@@ -19,6 +19,7 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   static const Color warnaUtama = Color.fromARGB(255, 35, 34, 34);
+  // Color.fromARGB(255, 0, 84, 209)
   TextEditingController searchController = TextEditingController();
   late FirebaseAuth _auth;
   late User? _user;

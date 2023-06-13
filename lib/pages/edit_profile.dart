@@ -87,7 +87,11 @@ class _EditProfilePageState extends State<EditProfilePage> {
         ),
         title: const Text(
           'Edit Profile',
-          style: TextStyle(color: Color.fromARGB(255, 47, 42, 42)),
+          style: TextStyle(
+            color: Color.fromARGB(255, 255, 255, 255),
+            fontWeight: FontWeight.bold,
+            fontSize: 23,
+          ),
         ),
         backgroundColor: const Color.fromARGB(255, 255, 203, 47),
         centerTitle: true,
@@ -116,12 +120,14 @@ class _EditProfilePageState extends State<EditProfilePage> {
                 children: [
                   CircleAvatar(
                     radius: 50,
-                    backgroundImage:
-                        profilePicture != null ? NetworkImage(profilePicture) : null,
+                    backgroundImage: profilePicture != null
+                        ? NetworkImage(profilePicture)
+                        : null,
                   ),
                   const SizedBox(height: 16),
                   Padding(
-                    padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.05),
+                    padding:
+                        EdgeInsets.symmetric(horizontal: screenWidth * 0.05),
                     child: Container(
                       width: screenWidth * 0.9,
                       height: 60,
@@ -144,7 +150,8 @@ class _EditProfilePageState extends State<EditProfilePage> {
                   ),
                   const SizedBox(height: 8),
                   Padding(
-                    padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.05),
+                    padding:
+                        EdgeInsets.symmetric(horizontal: screenWidth * 0.05),
                     child: Container(
                       width: screenWidth * 0.9,
                       height: 60,
@@ -167,7 +174,8 @@ class _EditProfilePageState extends State<EditProfilePage> {
                   ),
                   const SizedBox(height: 8),
                   Padding(
-                    padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.05),
+                    padding:
+                        EdgeInsets.symmetric(horizontal: screenWidth * 0.05),
                     child: Container(
                       width: screenWidth * 0.9,
                       height: 60,
@@ -190,7 +198,8 @@ class _EditProfilePageState extends State<EditProfilePage> {
                   ),
                   const SizedBox(height: 8),
                   Padding(
-                    padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.05),
+                    padding:
+                        EdgeInsets.symmetric(horizontal: screenWidth * 0.05),
                     child: Container(
                       width: screenWidth * 0.9,
                       height: 70,
@@ -266,7 +275,10 @@ class _EditProfilePageState extends State<EditProfilePage> {
                               ],
                               begin: Alignment.centerRight,
                               end: Alignment.centerLeft,
-                              colors: [Color.fromARGB(255, 255, 203, 47),Color.fromARGB(255, 255, 203, 47)], // Replace with your desired colors
+                              colors: [
+                                Color.fromARGB(255, 47, 137, 255),
+                                Color.fromARGB(255, 47, 137, 255)
+                              ], // Replace with your desired colors
                             ),
                           ),
                           child: Align(
@@ -275,7 +287,8 @@ class _EditProfilePageState extends State<EditProfilePage> {
                               style: TextStyle(
                                 fontSize: size.height * 0.025,
                                 fontWeight: FontWeight.bold,
-                                color: Colors.white, // Customize text color if needed
+                                color: Colors
+                                    .white, // Customize text color if needed
                               ),
                             ),
                           ),
@@ -289,7 +302,8 @@ class _EditProfilePageState extends State<EditProfilePage> {
           );
         },
       ),
-      bottomNavigationBar: buildBottomNavBar(3, MediaQuery.of(context).size, false),
+      bottomNavigationBar:
+          buildBottomNavBar(3, MediaQuery.of(context).size, false),
     );
   }
 }

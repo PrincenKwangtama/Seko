@@ -20,7 +20,11 @@ class CarPage extends StatelessWidget {
       appBar: AppBar(
         title: Text(
           carBrand,
-          style: const TextStyle(color: Color.fromARGB(255, 47, 42, 42)),
+          style: TextStyle(
+            color: Color.fromARGB(255, 255, 255, 255),
+            fontWeight: FontWeight.bold,
+            fontSize: 23,
+          ),
         ),
         backgroundColor: const Color.fromARGB(255, 255, 203, 47),
         leading: IconButton(
@@ -47,12 +51,14 @@ class CarPage extends StatelessWidget {
             itemCount: data.length,
             itemBuilder: (context, index) {
               final carData = data[index].data() as Map<String, dynamic>;
-              return buildCar(context, index, carData); // Pass the 'context' parameter
+              return buildCar(
+                  context, index, carData); // Pass the 'context' parameter
             },
           );
         },
       ),
-      bottomNavigationBar: buildBottomNavBar(0, MediaQuery.of(context).size, false),
+      bottomNavigationBar:
+          buildBottomNavBar(0, MediaQuery.of(context).size, false),
     );
   }
 
@@ -60,7 +66,9 @@ class CarPage extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.only(right: 8.0),
       child: SizedBox(
-        width: MediaQuery.of(context).size.width, // Adjust the width to fill the row
+        width: MediaQuery.of(context)
+            .size
+            .width, // Adjust the width to fill the row
         child: Container(
           decoration: const BoxDecoration(
             color: Colors.white,
@@ -90,7 +98,8 @@ class CarPage extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Padding(
-                  padding: const EdgeInsets.only(top: 8.0, left: 8.0), // Adjust the left padding
+                  padding: const EdgeInsets.only(
+                      top: 8.0, left: 8.0), // Adjust the left padding
                   child: carData['isRotated']
                       ? Image.network(
                           carData['carImage'],
@@ -111,7 +120,8 @@ class CarPage extends StatelessWidget {
                 ),
                 Expanded(
                   child: Padding(
-                    padding: const EdgeInsets.only(top: 8.0, left: 8.0), // Adjust the left padding
+                    padding: const EdgeInsets.only(
+                        top: 8.0, left: 8.0), // Adjust the left padding
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [

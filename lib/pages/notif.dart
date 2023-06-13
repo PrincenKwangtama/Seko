@@ -14,12 +14,16 @@ class NotifPage extends StatelessWidget {
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
           onPressed: () {
-            Get.offAll(const ProfilePage());  
+            Get.offAll(const ProfilePage());
           },
         ),
         title: const Text(
           'Notifications',
-          style: TextStyle(color: Color.fromARGB(255, 47, 42, 42)),
+          style: TextStyle(
+            color: Color.fromARGB(255, 255, 255, 255),
+            fontWeight: FontWeight.bold,
+            fontSize: 23,
+          ),
         ),
         backgroundColor: const Color.fromARGB(255, 255, 203, 47),
         centerTitle: true,
@@ -59,7 +63,8 @@ class NotifPage extends StatelessWidget {
           ),
         ],
       ),
-      bottomNavigationBar: buildBottomNavBar(3, MediaQuery.of(context).size, false),
+      bottomNavigationBar:
+          buildBottomNavBar(3, MediaQuery.of(context).size, false),
     );
   }
 }

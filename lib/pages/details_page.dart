@@ -22,7 +22,6 @@ class DetailsPage extends StatefulWidget {
   final int carPrice;
   final String carRating;
   final bool isRotated;
-  
 
   const DetailsPage({
     Key? key,
@@ -44,6 +43,8 @@ class DetailsPage extends StatefulWidget {
 }
 
 class _DetailsPageState extends State<DetailsPage> {
+  static const Color warnaUtama = Color.fromARGB(255, 0, 84, 209);
+  // Color.fromARGB(255, 0, 84, 209)
   final Completer<GoogleMapController> _controller = Completer();
   static const LatLng _center = LatLng(50.470685, 19.070234);
   void _onMapCreated(GoogleMapController controller) {
@@ -90,7 +91,9 @@ class _DetailsPageState extends State<DetailsPage> {
                   ),
                   child: Icon(
                     UniconsLine.multiply,
-                    color: isDarkMode ? Colors.white : const Color(0xff3b22a1),
+                    color: isDarkMode
+                        ? Colors.white
+                        : Colors.black /* warnaUtama */,
                     size: size.height * 0.025,
                   ),
                 ),
@@ -101,9 +104,7 @@ class _DetailsPageState extends State<DetailsPage> {
           titleSpacing: 0,
           leadingWidth: size.width * 0.15,
           title: Image.network(
-            isDarkMode
-                ? 'assets/images/seko.png'
-                : 'assets/images/seko.png',
+            isDarkMode ? 'assets/images/seko.png' : 'assets/images/seko.png',
             height: size.height * 0.10,
             width: size.width * 0.35,
           ),
@@ -156,9 +157,7 @@ class _DetailsPageState extends State<DetailsPage> {
                             widget.carClass,
                             textAlign: TextAlign.center,
                             style: GoogleFonts.poppins(
-                              color: isDarkMode
-                                  ? Colors.white
-                                  : const Color(0xff3b22a1),
+                              color: isDarkMode ? Colors.white : warnaUtama,
                               fontSize: size.width * 0.04,
                               fontWeight: FontWeight.bold,
                             ),
@@ -186,9 +185,7 @@ class _DetailsPageState extends State<DetailsPage> {
                             widget.carName,
                             textAlign: TextAlign.left,
                             style: GoogleFonts.poppins(
-                              color: isDarkMode
-                                  ? Colors.white
-                                  : const Color(0xff3b22a1),
+                              color: isDarkMode ? Colors.white : warnaUtama,
                               fontSize: size.width * 0.04,
                               fontWeight: FontWeight.bold,
                             ),
@@ -197,9 +194,7 @@ class _DetailsPageState extends State<DetailsPage> {
                           Text(
                             '/Rp.${widget.carPrice}',
                             style: GoogleFonts.poppins(
-                              color: isDarkMode
-                                  ? Colors.white
-                                  : const Color(0xff3b22a1),
+                              color: isDarkMode ? Colors.white : warnaUtama,
                               fontSize: size.width * 0.04,
                               fontWeight: FontWeight.bold,
                             ),
@@ -254,9 +249,7 @@ class _DetailsPageState extends State<DetailsPage> {
                         child: Text(
                           'Vehicle Location',
                           style: GoogleFonts.poppins(
-                            color: isDarkMode
-                                ? Colors.white
-                                : const Color(0xff3b22a1),
+                            color: isDarkMode ? Colors.white : warnaUtama,
                             fontSize: size.width * 0.055,
                             fontWeight: FontWeight.bold,
                           ),
@@ -292,7 +285,7 @@ class _DetailsPageState extends State<DetailsPage> {
                                     children: [
                                       Icon(
                                         UniconsLine.map_marker,
-                                        color: const Color(0xff3b22a1),
+                                        color: warnaUtama,
                                         size: size.height * 0.05,
                                       ),
                                       Text(
@@ -301,7 +294,7 @@ class _DetailsPageState extends State<DetailsPage> {
                                         style: GoogleFonts.poppins(
                                           color: isDarkMode
                                               ? Colors.white
-                                              : const Color(0xff3b22a1),
+                                              : warnaUtama,
                                           fontSize: size.width * 0.05,
                                           fontWeight: FontWeight.bold,
                                         ),
@@ -313,7 +306,7 @@ class _DetailsPageState extends State<DetailsPage> {
                                           color: isDarkMode
                                               ? Colors.white.withOpacity(0.7)
                                               : Colors.black.withOpacity(0.7),
-                                          fontSize: size.width * 0.020,
+                                          fontSize: size.width * 0.017,
                                           fontWeight: FontWeight.bold,
                                         ),
                                       ),
@@ -343,7 +336,14 @@ class _DetailsPageState extends State<DetailsPage> {
                       ),
                     ],
                   ),
-                  buildSelectButton(size, isDarkMode,widget.carPrice,widget.carName,widget.carImage, widget.carRating, widget.carId),
+                  buildSelectButton(
+                      size,
+                      isDarkMode,
+                      widget.carPrice,
+                      widget.carName,
+                      widget.carImage,
+                      widget.carRating,
+                      widget.carId),
                 ],
               ),
             ),
@@ -381,7 +381,7 @@ class _DetailsPageState extends State<DetailsPage> {
               children: [
                 Icon(
                   icon,
-                  color: const Color(0xff3b22a1),
+                  color: Color.fromARGB(255, 0, 84, 209),
                   size: size.width * 0.08,
                 ),
                 Padding(
@@ -416,8 +416,8 @@ class _DetailsPageState extends State<DetailsPage> {
   }
 }
 
-Align buildSelectButton(
-    Size size, bool isDarkMode, int carPrice, String carName, String carImage, String carRating, String carId) {
+Align buildSelectButton(Size size, bool isDarkMode, int carPrice,
+    String carName, String carImage, String carRating, String carId) {
   final user = FirebaseAuth.instance.currentUser;
   if (user != null) {
     return Align(

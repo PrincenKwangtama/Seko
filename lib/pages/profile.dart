@@ -56,13 +56,20 @@ class _ProfilePageState extends State<ProfilePage> {
         ),
         title: const Text(
           'Profile',
-          style: TextStyle(color: Color.fromARGB(255, 47, 42, 42)),
+          style: TextStyle(
+            color: Color.fromARGB(255, 255, 255, 255),
+            fontWeight: FontWeight.bold,
+            fontSize: 23,
+          ),
         ),
         backgroundColor: const Color.fromARGB(255, 255, 203, 47),
         centerTitle: true,
       ),
       body: StreamBuilder<DocumentSnapshot>(
-        stream: FirebaseFirestore.instance.collection('users').doc(_user!.uid).snapshots(),
+        stream: FirebaseFirestore.instance
+            .collection('users')
+            .doc(_user!.uid)
+            .snapshots(),
         builder: (context, snapshot) {
           if (!snapshot.hasData) {
             return const Center(
@@ -86,22 +93,45 @@ class _ProfilePageState extends State<ProfilePage> {
                 children: [
                   CircleAvatar(
                     radius: 60,
-                    backgroundImage: profilePicture != null ? NetworkImage(profilePicture) : null,
+                    backgroundImage: profilePicture != null
+                        ? NetworkImage(profilePicture)
+                        : null,
                   ),
                   SizedBox(height: size.height * 0.03),
-                  Text(
-                    '${name ?? 'N/A'}',
-                    style: const TextStyle(fontSize: 18),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Icon(Icons.person, size: 18),
+                      SizedBox(width: 8),
+                      Text(
+                        '${name ?? 'N/A'}',
+                        style: const TextStyle(fontSize: 18),
+                      ),
+                    ],
                   ),
                   SizedBox(height: size.height * 0.01),
-                  Text(
-                    '${email ?? 'N/A'}',
-                    style: const TextStyle(fontSize: 18),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Icon(Icons.email, size: 18),
+                      SizedBox(width: 8),
+                      Text(
+                        '${email ?? 'N/A'}',
+                        style: const TextStyle(fontSize: 18),
+                      ),
+                    ],
                   ),
                   SizedBox(height: size.height * 0.01),
-                  Text(
-                    '${phoneNumber ?? 'N/A'}',
-                    style: const TextStyle(fontSize: 18),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Icon(Icons.phone, size: 18),
+                      SizedBox(width: 8),
+                      Text(
+                        '${phoneNumber ?? 'N/A'}',
+                        style: const TextStyle(fontSize: 18),
+                      ),
+                    ],
                   ),
                   SizedBox(height: size.height * 0.01),
                   Text(
@@ -126,7 +156,10 @@ class _ProfilePageState extends State<ProfilePage> {
                               ],
                               begin: Alignment.centerRight,
                               end: Alignment.centerLeft,
-                              colors: [Color.fromARGB(255, 255, 203, 47),Color.fromARGB(255, 255, 203, 47)], // Replace with your desired colors
+                              colors: [
+                                Color.fromARGB(255, 47, 137, 255),
+                                Color.fromARGB(255, 47, 137, 255)
+                              ], // Replace with your desired colors
                             ),
                           ),
                           child: Align(
@@ -135,7 +168,8 @@ class _ProfilePageState extends State<ProfilePage> {
                               style: TextStyle(
                                 fontSize: size.height * 0.025,
                                 fontWeight: FontWeight.bold,
-                                color: Colors.white, // Customize text color if needed
+                                color: Colors
+                                    .white, // Customize text color if needed
                               ),
                             ),
                           ),
@@ -161,7 +195,10 @@ class _ProfilePageState extends State<ProfilePage> {
                               ],
                               begin: Alignment.centerRight,
                               end: Alignment.centerLeft,
-                              colors: [Color.fromARGB(255, 255, 203, 47),Color.fromARGB(255, 255, 203, 47)], // Replace with your desired colors
+                              colors: [
+                                Color.fromARGB(255, 47, 137, 255),
+                                Color.fromARGB(255, 47, 137, 255)
+                              ], // Replace with your desired colors
                             ),
                           ),
                           child: Align(
@@ -170,7 +207,8 @@ class _ProfilePageState extends State<ProfilePage> {
                               style: TextStyle(
                                 fontSize: size.height * 0.025,
                                 fontWeight: FontWeight.bold,
-                                color: Colors.white, // Customize text color if needed
+                                color: Colors
+                                    .white, // Customize text color if needed
                               ),
                             ),
                           ),
@@ -196,7 +234,10 @@ class _ProfilePageState extends State<ProfilePage> {
                               ],
                               begin: Alignment.centerRight,
                               end: Alignment.centerLeft,
-                              colors: [Color.fromARGB(255, 255, 203, 47),Color.fromARGB(255, 255, 203, 47)], // Replace with your desired colors
+                              colors: [
+                                Color.fromARGB(255, 210, 50, 50),
+                                Color.fromARGB(255, 210, 50, 50)
+                              ], // Replace with your desired colors
                             ),
                           ),
                           child: Align(
@@ -205,7 +246,8 @@ class _ProfilePageState extends State<ProfilePage> {
                               style: TextStyle(
                                 fontSize: size.height * 0.025,
                                 fontWeight: FontWeight.bold,
-                                color: Colors.white, // Customize text color if needed
+                                color: Colors
+                                    .white, // Customize text color if needed
                               ),
                             ),
                           ),
@@ -219,7 +261,8 @@ class _ProfilePageState extends State<ProfilePage> {
           );
         },
       ),
-      bottomNavigationBar: buildBottomNavBar(3, MediaQuery.of(context).size, false),
+      bottomNavigationBar:
+          buildBottomNavBar(3, MediaQuery.of(context).size, false),
     );
   }
 }
